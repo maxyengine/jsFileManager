@@ -1,0 +1,6 @@
+@import "../../styles/common";
+@import "../../styles/libs";
+
+.default {
+  @extend %ajax-error;
+}

@@ -1,0 +1,66 @@
+// switch dark / light theme
+$inverse: false;
+// -------------------------
+
+$base: 0;
+$hue: 220;
+$error: 340;
+$line-height: 1.5;
+$font-base: Assistant, 'PT Sans', sans-serif;
+$font-size-base: 16px;
+$func: ease-in-out;
+$time: .1s;
+$br: 2px;
+
+// color schemes
+$bg: #fff;
+$accent: hsb($hue, 70, 100);
+$body-bg: hsb($hue, 10, 15);
+$box-shadow-color: hsb($hue, 10, 5);
+$uploader-border-color: hsb($hue, 5, 90);
+$uploader-bg-color-drop: hsb($hue, 3, 100);
+$text-color-1: hsb($hue, 5, 20);
+$text-color-2: hsb($hue, 5, 70);
+$info-btn-color: hsb($hue, 10, 50);
+$info-btn-bg-color: hsb($hue, 3, 90);
+$info-btn-hover-bg-color: hsb($hue, 10, 20);
+$item-color: hsb($hue, 25, 50);
+$item-bg-color: hsb($hue, 1, 98);
+$item-loading-bg-color: hsb($hue, 5, 100);
+$item-loading-color: $accent;
+$item-loading-info-color: hsb($hue, 3, 70);
+$loading-bg-color: hsb($hue, 15, 100);
+$item-error-color: hsb($error, 70, 90);
+$item-error-info-color: hsb($error, 3, 70);
+$item-error-bg-color: hsb($error, 3, 100);
+$error-color: hsb($error, 70, 100);
+$menu-border-color: rgba(#000, .075);
+$menu-bg: darken($bg, 3);
+$menu-hover-bg: darken($bg, 10);
+
+@if $inverse == true {
+  $bg: hsb($hue, 10, 10);
+  $accent: hsb($hue, 70, 100);
+  $body-bg: hsb($hue, 5, 95);
+  $box-shadow-color: hsb($hue, 10, 50);
+  $uploader-border-color: hsb($hue, 10, 25);
+  $uploader-bg-color-drop: hsb($hue, 10, 13);
+  $text-color-1: hsb($hue, 10, 90);
+  $text-color-2: hsb($hue, 10, 50);
+  $info-btn-color: hsb($hue, 10, 50);
+  $info-btn-bg-color: hsb($hue, 10, 13);
+  $info-btn-hover-bg-color: $accent;
+  $item-color: hsb($hue, 5, 90);
+  $item-bg-color: hsb($hue, 10, 13);
+  $item-loading-bg-color: $item-bg-color;
+  $item-loading-color: $accent;
+  $item-loading-info-color: $info-btn-color;
+  $loading-bg-color: hsb($hue, 20, 20);
+  $item-error-color: hsb($error, 70, 100);
+  $item-error-info-color: $info-btn-color;
+  $item-error-bg-color: $item-bg-color;
+  $error-color: hsb($error, 70, 70);
+  $menu-border-color: rgba(#fff, .075);
+  $menu-bg: darken($bg, 3);
+  $menu-hover-bg: $bg;
+}

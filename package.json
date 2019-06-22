@@ -1,0 +1,50 @@
+{
+  "name": "js-uploader",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": ".",
+  "dependencies": {
+    "@babel/polyfill": "^7.4.3",
+    "@nrg/core": "^1.0.0-beta.2",
+    "@nrg/form": "^1.0.0-beta.1",
+    "@nrg/http": "^1.0.0-beta.3",
+    "@nrg/i18n": "^1.0.0-beta.0",
+    "@nrg/react-di": "^1.0.0-beta.2",
+    "browser-cookies": "^1.2.0",
+    "file-extension": "^4.0.5",
+    "filesize": "^4.1.2",
+    "node-sass": "^4.11.0",
+    "path": "^0.12.7",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^6.0.1",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "2.1.8",
+    "redux": "^4.0.1",
+    "uuid": "^3.3.2",
+    "whatwg-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "ncp": "^2.0.0",
+    "react-app-rewired": "^2.1.1",
+    "redux-devtools-extension": "^2.13.8",
+    "rimraf": "^2.6.3"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject",
+    "release": "yarn run build && node scripts/release && rimraf build"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie < 11",
+    "not op_mini all"
+  ]
+}

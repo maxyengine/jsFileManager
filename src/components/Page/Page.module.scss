@@ -1,0 +1,31 @@
+@import "../../styles/common";
+
+.default {
+  padding: 50px;
+  background-color: $bg;
+  font-family: $font-base;
+  font-size: $font-size-base;
+
+  &, * {
+    position: relative;
+    box-sizing: border-box;
+    transition: all $time $func;
+  }
+
+  @media (max-width: 420px) {
+    padding: 30px;
+  }
+
+  @media (max-width: 360px) {
+    padding: 20px;
+  }
+
+  button {
+    border: 0;
+    cursor: pointer;
+
+    &:focus, &:active {
+      outline: none;
+    }
+  }
+}

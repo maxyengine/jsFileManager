@@ -1,0 +1,35 @@
+@import "../../styles/common";
+
+.default {
+  // background-color: $bg;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  margin: 0;
+
+  > a, > button {
+    display: block;
+    margin: 0 -1px 0 0;
+    padding: 9px 30px 7px;
+    border: 1px solid $menu-border-color;
+    font-size: $font-size-base;
+    background: $menu-bg;
+    line-height: $line-height;
+    font-family: $font-base;
+    color: $info-btn-color;
+    transition: all $time $func;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+
+    @media (max-width: 340px) {
+      padding: 9px 20px 7px;
+    }
+
+    &:hover, &:active, &.active {
+      color: $text-color-1;
+      background: $menu-hover-bg;
+      z-index: 2;
+    }
+  }
+}

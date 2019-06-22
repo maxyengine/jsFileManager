@@ -1,0 +1,55 @@
+@import "../../styles/common";
+
+.default {
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+	min-height: 300px;
+	border-radius: $br;
+	letter-spacing: .025em;
+	text-align: center;
+
+	form {
+		width: 240px;
+		margin: 0 auto;
+
+		input, button {
+			display: block;
+			width: 100%;
+			border-radius: $br;
+			line-height: $line-height;
+			font-family: $font-base;
+			font-size: $font-size-base;
+
+		}
+
+		input {
+			padding: 7px 15px;
+			border: 1px solid rgba(#000, .1);
+			background: darken($bg, 3);
+			color: $text-color-1;
+
+			+ div {
+				font-size: .9em;
+				text-align: left;
+				color: $error-color;
+				margin: 5px 15px 0;
+			}
+		}
+
+		button {
+			padding: 8px 15px;
+			background: $accent;
+			color: #fff;
+
+			&:hover {
+				background: adjust-hue($accent, 30deg);
+			}
+		}
+
+		> div {
+			margin: 0 auto .9em;
+		}
+	}
+
+}

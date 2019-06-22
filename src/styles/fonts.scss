@@ -1,0 +1,51 @@
+// Google Font
+@import url('https://fonts.googleapis.com/css?family=Assistant:200,300,400,600,700,800&subset=hebrew');
+
+// Font Icons
+$icomoon-font-family: "NrgSoft" !default;
+$icomoon-font-path: "./fonts" !default;
+
+$nrg-across: "\e900";
+$nrg-retry: "\e901";
+$nrg-view: "\e902";
+$nrg-download: "\e903";
+
+@font-face {
+	font-family: '#{$icomoon-font-family}';
+	src: url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?i3fwfk');
+	src: url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?i3fwfk#iefix') format('embedded-opentype'),
+		 url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?i3fwfk') format('truetype'),
+		 url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?i3fwfk') format('woff'),
+		 url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?i3fwfk##{$icomoon-font-family}') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="nrg-"], [class*=" nrg-"] {
+	/* use !important to prevent issues with browser extensions that change fonts */
+	font-family: '#{$icomoon-font-family}' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.nrg-across:before {
+	content: $nrg-across;
+}
+.nrg-retry:before {
+	content: $nrg-retry;
+}
+.nrg-download:before {
+	content: $nrg-download;
+}
+.nrg-view:before {
+	content: $nrg-view;
+}
+

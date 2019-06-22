@@ -1,0 +1,23 @@
+@import "../../../styles/common";
+
+.default {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+	padding: 50px;
+
+	> svg {
+		top: -.2em;
+
+		path, line, polyline {
+		  stroke: $text-color-2;
+		}
+	}
+
+	> span {
+		display: block;
+		margin-left: 1.5em;
+		color: $text-color-2;
+	}
+}

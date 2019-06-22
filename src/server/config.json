@@ -1,0 +1,15 @@
+{
+  "isDemo": false,
+  "mode": "development",
+  "authorization": true,
+  "directFileAccess": false,
+  "directFileUrl": "/uploads",
+  "uploadsFolder": "../uploads",
+  "signature": "ae73fcff73ff56bddf60f6bddadad374d924e63c5d317ae77e2a1f93a6417b89",
+  "maxSize": "200GB",
+  "denyExtensions": [
+    "exe",
+    "sh",
+    "php"
+  ]
+}

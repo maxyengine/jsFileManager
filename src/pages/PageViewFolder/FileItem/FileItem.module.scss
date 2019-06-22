@@ -1,0 +1,10 @@
+@import "../../../styles/common";
+
+.default {
+  @extend %item;
+
+  .full {
+  	min-width: 120px;
+  }
+}
+

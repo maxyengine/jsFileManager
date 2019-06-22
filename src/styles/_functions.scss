@@ -1,0 +1,10 @@
+// HSB
+@function hsb($h, $s, $b, $a: 1) {
+  @if $b == 0 {
+    @return hsla(0, 0, 0, $a)
+  } @else {
+    $l-hsl: ($b/2) * (2 - ($s/100));
+    $s-hsl: ($b * $s) / if($l-hsl < 50, $l-hsl * 2, 200 - $l-hsl * 2);
+    @return hsla($h, $s-hsl, $l-hsl, $a);
+  }
+}

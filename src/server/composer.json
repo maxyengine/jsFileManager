@@ -1,0 +1,14 @@
+{
+  "description": "The file manager application server side",
+  "require": {
+    "spatie/7to5": "^1.3",
+    "guzzlehttp/guzzle": "^6.3",
+    "lcobucci/jwt": "^3.2",
+    "league/flysystem": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Nrg\\": "src7.2/"
+    }
+  }
+}

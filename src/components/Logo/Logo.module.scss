@@ -1,0 +1,15 @@
+@import "../../styles/common";
+
+.default {
+  margin-bottom: 10px;
+  transition: all $time $func;
+
+  path, line, polyline {
+  	stroke: $text-color-2;
+  }
+
+  &.highlight > * {
+    stroke: $accent;
+    pointer-events: none;
+  }
+}
