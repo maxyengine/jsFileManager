@@ -26,8 +26,8 @@ export default class extends Client {
     return await this.post('/config')
   }
 
-  async fetchUploadsFolder () {
-    const raw = await this.post('/list', {path: `${this.storageId}://`})
+  async fetchUploadsFolder (path) {
+    const raw = await this.post('/list', {path: path || `${this.storageId}://`})
 
     return this.fileFactory.createDirectory(raw)
   }

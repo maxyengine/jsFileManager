@@ -4,6 +4,7 @@ import Controller from '../Controller'
 import { inject } from '@nrg/react-di'
 import { icon } from './helpers'
 import Directory from '../../../entities/Directory'
+import { Link } from 'react-router-dom'
 
 const Component = class extends React.Component {
 
@@ -14,6 +15,7 @@ const Component = class extends React.Component {
 
   render () {
     const {file} = this.props
+    const path = file.path.value
     const baseName = file.path.fileName.baseName
     const extension = file instanceof Directory ? 'dir' : file.path.fileName.extension
     const size = file.size && file.size.toHumanString()
@@ -26,7 +28,7 @@ const Component = class extends React.Component {
         </td>
         <td>
           <div>
-            <a href="#">{baseName}</a>
+            <Link to={{pathname: '/view-folder', search: `?path=${path}`}}>{baseName}</Link>
           </div>
         </td>
         <td>

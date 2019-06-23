@@ -40,8 +40,8 @@ export default class extends Value {
     this.store.dispatch({type, state: {...this.state, ...diff}})
   }
 
-  async fetchUploadsFolder () {
-    const directory = await this.client.fetchUploadsFolder()
+  async fetchUploadsFolder (path) {
+    const directory = await this.client.fetchUploadsFolder(path)
 
     const files = directory.isEmpty ? [] : directory.children
 

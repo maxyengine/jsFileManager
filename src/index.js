@@ -12,7 +12,7 @@ import PageViewFolder from './pages/PageViewFolder'
 import PageLogin from './pages/PageLogin'
 import NavMenu from './components/NavMenu'
 import PrivateRoute from './components/PrivateRoute'
-import { MemoryRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { ServiceLocator, createInjector } from '@nrg/react-di'
 import { Endpoint } from '@nrg/http'
 import { Value } from '@nrg/core'
@@ -56,7 +56,9 @@ $nrg.Uploader = $nrg.Uploader || class extends Value {
           <PrivateRoute exact path="/view-folder" component={PageViewFolder}/>
           <Route path="/login" component={PageLogin}/>*/}
 
-          <PrivateRoute exact path="/" component={PageViewFolder}/>
+          <NavMenu/>
+          <PrivateRoute exact path="/" component={PageUploader}/>
+          <PrivateRoute exact path="/view-folder" component={PageViewFolder}/>
 
         </ServiceLocator>
       </Router>
