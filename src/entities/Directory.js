@@ -3,7 +3,7 @@ import File from './File'
 const parent = Symbol()
 const children = Symbol()
 
-const self = class extends File {
+class Directory extends File {
 
   constructor (raw) {
     super(raw)
@@ -11,7 +11,7 @@ const self = class extends File {
     this[children] = raw.children && [...raw.children]
 
     if (!this.isRoot) {
-      this[parent] = new self({path: this.path.parent})
+      this[parent] = new Directory({path: this.path.parent.value})
     }
   }
 
@@ -32,4 +32,4 @@ const self = class extends File {
   }
 }
 
-export default self
+export default Directory

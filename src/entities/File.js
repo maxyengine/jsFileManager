@@ -4,7 +4,7 @@ const path = Symbol()
 const size = Symbol()
 const lastModified = Symbol()
 
-export default class {
+class File {
 
   constructor (raw) {
     this[path] = new Path(raw.path)
@@ -24,3 +24,5 @@ export default class {
     return this[lastModified]
   }
 }
+
+export default File

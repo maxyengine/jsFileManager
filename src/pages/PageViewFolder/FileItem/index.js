@@ -2,6 +2,8 @@ import React from 'react'
 import theme from './FileItem.module.scss'
 import Controller from '../Controller'
 import { inject } from '@nrg/react-di'
+import { icon } from './helpers'
+import Directory from '../../../entities/Directory'
 
 const Component = class extends React.Component {
 
@@ -10,41 +12,33 @@ const Component = class extends React.Component {
     this.controller = this.props.controller
   }
 
-  onDelete = () => {
-    this.controller.deleteFile(this.props.file)
-  }
-
-  onView = () => {
-    this.controller.openFile(this.props.file)
-  }
-
-  onDownload = () => {
-    this.controller.downloadFile(this.props.file)
-  }
-
   render () {
     const {file} = this.props
-    const name = file.path.fileName.value
+    const baseName = file.path.fileName.baseName
+    const extension = file instanceof Directory ? 'dir' : file.path.fileName.extension
+    const size = file.size && file.size.toHumanString()
+    const lastModified = file.lastModified && file.lastModified.toLocaleString()
 
     return (
-      <li className={`${theme.default} ${theme.success}`}>
-        <div className={theme.inner}>
-          <div className={theme.progress} style={{width: `${this.percent}%`}}/>
-          <div className={theme.name} title={name}>{name}</div>
-          <div className={theme.size}>{file.size.toHumanString()}</div>
-          <div className={`${theme.controls} ${theme.full}`}>
-            <button className={theme.btnView} title="View" onClick={this.onView}>
-              <i className="nrg-view"/>
-            </button>
-            <button className={theme.btnDownload} title="Download" onClick={this.onDownload}>
-              <i className="nrg-download"/>
-            </button>
-            <button className={theme.btnClose} title="Cancel" onClick={this.onDelete}>
-              <i className="nrg-across"/>
-            </button>
+      <tr className={theme.default}>
+        <td>
+          <div className={theme.iconWrapper}>{icon(file)}</div>
+        </td>
+        <td>
+          <div>
+            <a href="#">{baseName}</a>
           </div>
-        </div>
-      </li>
+        </td>
+        <td>
+          <div>{extension}</div>
+        </td>
+        <td>
+          <div>{size}</div>
+        </td>
+        <td>
+          <div>{lastModified}</div>
+        </td>
+      </tr>
     )
   }
 }

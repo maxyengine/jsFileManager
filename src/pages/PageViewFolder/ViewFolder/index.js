@@ -8,9 +8,9 @@ import NoMatchedFiles from '../NoMatchedFiles'
 const Component = class extends React.Component {
 
   render () {
-    const {keywords, files, filteredFiles} = this.props
+    const {keywords, directory, filteredFiles} = this.props
 
-    if (!files.length) {
+    if (directory.isEmpty) {
       return (
         <EmptyFolder/>
       )
@@ -18,15 +18,11 @@ const Component = class extends React.Component {
 
     return (<>
       <StatusBar/>
-      {
-        files.length ?
-          <FileList files={'' === keywords ? files : filteredFiles}/> :
-          <NoMatchedFiles/>
-      }
+      <FileList files={'' === keywords ? directory.children : filteredFiles}/>
     </>)
   }
 }
 
-const mapStateToProps = ({keywords, files, filteredFiles}) => ({keywords, files, filteredFiles})
+const mapStateToProps = ({keywords, directory, filteredFiles}) => ({keywords, directory, filteredFiles})
 
 export default connect(mapStateToProps)(Component)

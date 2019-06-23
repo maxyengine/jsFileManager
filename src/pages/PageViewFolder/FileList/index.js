@@ -8,11 +8,17 @@ const Component = class extends React.Component {
     const {files} = this.props
 
     return (
-      <ul className={theme.default}>
-        {files.map(
-          file => <FileItem key={file.path.value} file={file}/>
-        )}
-      </ul>
+      <div className={theme.default}>
+        <table>
+          <tbody>
+          {files.map(
+            file => {
+              return <FileItem key={file.path.value} file={file}/>
+            }
+          )}
+          </tbody>
+        </table>
+      </div>
     )
   }
 }

@@ -17,6 +17,7 @@ export default class extends Value {
   }
 
   initState = {
+    directory: null,
     files: [],
     filteredFiles: [],
     keywords: ''
@@ -41,9 +42,10 @@ export default class extends Value {
 
   async fetchUploadsFolder () {
     const directory = await this.client.fetchUploadsFolder()
+
     const files = directory.isEmpty ? [] : directory.children
 
-    this.runAction(FETCH_UPLOADS_FOLDER, {files, keywords: ''})
+    this.runAction(FETCH_UPLOADS_FOLDER, {directory, files, keywords: ''})
   }
 
   deleteFile (file) {

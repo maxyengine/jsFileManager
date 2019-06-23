@@ -1,7 +1,7 @@
 {
   "isDemo": false,
   "mode": "development",
-  "authorization": true,
+  "authorization": false,
   "directFileAccess": false,
   "directFileUrl": "/uploads",
   "uploadsFolder": "../uploads",

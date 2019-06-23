@@ -3,8 +3,9 @@ import { connect } from 'react-redux'
 import { inject } from '@nrg/react-di'
 import Controller from '../Controller'
 import theme from './StatusBar.module.scss'
+import Dropdown from '../../../components/Dropdown'
 
-const Component = class extends React.Component {
+class StatusBar extends React.Component {
 
   constructor (props) {
     super(props)
@@ -13,6 +14,10 @@ const Component = class extends React.Component {
 
   onSearch = (event) => {
     this.controller.search(event.target.value)
+  }
+
+  onNew = (value) => {
+    console.log(value)
   }
 
   onShowAll = () => {
@@ -26,6 +31,15 @@ const Component = class extends React.Component {
     return (
       <div className={theme.default}>
         <span>Files: {count}</span>
+        <Dropdown
+          label={'New'}
+          items={[
+            {value: 'folder', label: 'Folder'},
+            {value: 'file', label: 'File'},
+            {value: 'hyperlink', label: 'Hyperlink'}
+          ]}
+          onChange={this.onNew}
+        />
         <div>
           <input
             type={'text'}
@@ -47,4 +61,4 @@ const Component = class extends React.Component {
 const mapStateToProps = ({keywords, files, filteredFiles}) => ({keywords, files, filteredFiles})
 const dependencies = {controller: Controller}
 
-export default inject(connect(mapStateToProps)(Component), dependencies)
+export default inject(connect(mapStateToProps)(StatusBar), dependencies)
