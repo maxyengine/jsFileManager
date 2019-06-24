@@ -2,7 +2,7 @@ import { Value } from '@nrg/core'
 import { createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-const FETCH_UPLOADS_FOLDER = 'FETCH_UPLOADS_FOLDER'
+const FETCH_DIRECTORY = 'FETCH_DIRECTORY'
 const DELETE_FILE = 'REMOVE_FILE'
 const SEARCH_FILES = 'SEARCH_FILES'
 
@@ -18,7 +18,6 @@ export default class extends Value {
 
   initState = {
     directory: null,
-    files: [],
     filteredFiles: [],
     keywords: ''
   }
@@ -36,35 +35,39 @@ export default class extends Value {
     return this.store.getState()
   }
 
-  runAction (type, diff) {
+  action (type, diff) {
     this.store.dispatch({type, state: {...this.state, ...diff}})
   }
 
-  async fetchUploadsFolder (path) {
-    const directory = await this.client.fetchUploadsFolder(path)
+  async fetchDirectory (path) {
+    const directory = await this.client.fetchDirectory(path)
 
-    const files = directory.isEmpty ? [] : directory.children
-
-    this.runAction(FETCH_UPLOADS_FOLDER, {directory, files, keywords: ''})
+    this.action(FETCH_DIRECTORY, {directory, keywords: ''})
   }
 
-  deleteFile (file) {
+  async deleteFile (file) {
     try {
       this.client.deleteFile(file.path.value)
-      let {files, keywords} = this.state
-      files = files.filter(item => (item !== file))
 
-      this.runAction(DELETE_FILE, {files, filteredFiles: this.filterFiles(files, keywords)})
+      const {keywords} = this.state
+      const directory = await this.client.fetchDirectory(file.parent.path.value)
+
+      this.action(DELETE_FILE, {
+        directory,
+        filteredFiles: directory.isEmpty ? [] : this.filterFiles(directory.children, keywords)
+      })
+
     } catch (e) {
       //todo: handle error
     }
   }
 
   search (keywords) {
+    const {directory} = this.state
+    const files = directory.isEmpty ? [] : directory.children
     keywords = keywords.toLocaleLowerCase()
-    const {files} = this.state
 
-    this.runAction(SEARCH_FILES, {
+    this.action(SEARCH_FILES, {
       keywords,
       filteredFiles: '' === keywords ? files : this.filterFiles(files, keywords)
     })

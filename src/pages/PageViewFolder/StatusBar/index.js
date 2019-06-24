@@ -25,7 +25,8 @@ class StatusBar extends React.Component {
   }
 
   render () {
-    const {keywords, files, filteredFiles} = this.props
+    const {keywords, directory, filteredFiles} = this.props
+    const files = directory.isEmpty ? [] : directory.children
     const count = ('' === keywords ? files : filteredFiles).length
 
     return (
@@ -58,7 +59,7 @@ class StatusBar extends React.Component {
   }
 }
 
-const mapStateToProps = ({keywords, files, filteredFiles}) => ({keywords, files, filteredFiles})
+const mapStateToProps = ({keywords, directory, filteredFiles}) => ({keywords, directory, filteredFiles})
 const dependencies = {controller: Controller}
 
 export default inject(connect(mapStateToProps)(StatusBar), dependencies)

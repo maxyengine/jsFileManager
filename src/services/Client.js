@@ -26,16 +26,10 @@ export default class extends Client {
     return await this.post('/config')
   }
 
-  async fetchUploadsFolder (path) {
+  async fetchDirectory (path) {
     const raw = await this.post('/list', {path: path || `${this.storageId}://`})
 
     return this.fileFactory.createDirectory(raw)
-  }
-
-  createFileUploader () {
-    return super.createFileUploader('/upload', {}, {
-      path: `${this.storageId}://`,
-    })
   }
 
   async deleteFile (path) {
@@ -67,5 +61,11 @@ export default class extends Client {
       }),
       '_blank'
     )
+  }
+
+  createFileUploader () {
+    return super.createFileUploader('/upload', {}, {
+      path: `${this.storageId}://`,
+    })
   }
 }

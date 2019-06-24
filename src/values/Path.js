@@ -9,7 +9,7 @@ const
   isRoot = Symbol(),
   parent = Symbol()
 
-const self = class {
+class Path {
 
   constructor (val, isDir = false) {
     [this[storageId], this[filePath]] = val.split('://')
@@ -20,7 +20,7 @@ const self = class {
     this[isDirectory] = isDir
     this[fileName] = new FileName(path.pop(), isDir)
     this[isRoot] = '' === this[filePath]
-    this[parent] = this[isRoot] ? null : new self(this[storageId] + '://' + path.join('/'), true)
+    this[parent] = this[isRoot] ? null : new Path(this[storageId] + '://' + path.join('/'), true)
   }
 
   get value () {
@@ -53,8 +53,8 @@ const self = class {
     }
 
     return this.value === this.storageId + '://' ?
-      new self(this.value + path, isDir) :
-      new self(this.value + '/' + path, isDir)
+      new Path(this.value + path, isDir) :
+      new Path(this.value + '/' + path, isDir)
   }
 
   toString () {
@@ -62,7 +62,7 @@ const self = class {
   }
 
   isEqual (path) {
-    return path instanceof self ? path.value === this.value : path === this.value
+    return path instanceof Path ? path.value === this.value : path === this.value
   }
 
   contains (path) {
@@ -77,4 +77,4 @@ const self = class {
   }
 }
 
-export default self
+export default Path
