@@ -57,6 +57,7 @@ $nrg.Uploader = $nrg.Uploader || class extends Value {
           <Route path="/login" component={PageLogin}/>*/}
 
           <PrivateRoute exact path="/" component={PageViewFolder}/>
+          <Route path="/login" component={PageLogin}/>
 
         </ServiceLocator>
       </Router>

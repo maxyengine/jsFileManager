@@ -36,6 +36,11 @@ class HttpResponse
         return $this;
     }
 
+    /**
+     * @param int $code
+     * @param string|null $reasonPhrase
+     * @return HttpResponse
+     */
     public function setStatusCode(int $code, string $reasonPhrase = null): HttpResponse
     {
         $this->setStatus(new HttpStatus($code, $reasonPhrase));

@@ -3,21 +3,19 @@
 namespace Nrg\FileManager\Action\Directory;
 
 use Nrg\FileManager\Form\Directory\CreateDirectoryForm;
+use Nrg\Http\Exception\ValidationException;
 use Nrg\Http\Value\HttpStatus;
 use Nrg\FileManager\UseCase\Directory\CreateDirectory;
 use Nrg\Http\Event\HttpExchangeEvent;
-use Nrg\Rx\Abstraction\Observer;
-use Nrg\Rx\Service\ObserverStub;
+use ReflectionException;
 
 /**
  * Class CreateDirectoryAction.
  *
  * Creates a directory in a directory with a parentPath.
  */
-class CreateDirectoryAction implements Observer
+class CreateDirectoryAction
 {
-    use ObserverStub;
-
     /**
      * @var CreateDirectory
      */
@@ -43,24 +41,20 @@ class CreateDirectoryAction implements Observer
      * Creates a directory with a path.
      *
      * @param HttpExchangeEvent $event
+     *
+     * @throws ValidationException
+     * @throws ReflectionException
      */
-    public function onNext($event)
+    public function onNext(HttpExchangeEvent $event): void
     {
         $this->form->populate($event->getRequest()->getBodyParams());
 
         if ($this->form->hasErrors()) {
-            $event->getResponse()
-                ->setStatus(new HttpStatus(HttpStatus::UNPROCESSABLE_ENTITY))
-                ->setBody($this->form->serialize());
-        } else {
-            $event->getResponse()
-                ->setStatus(new HttpStatus(HttpStatus::CREATED))
-                ->setBody($this->createDirectory->execute($this->form->serialize()));
+            throw new ValidationException($this->form->getErrors());
         }
-    }
 
-    public function onError($throwable, $event)
-    {
-        var_dump($throwable); exit;
+        $event->getResponse()
+            ->setStatusCode(HttpStatus::CREATED)
+            ->setBody($this->createDirectory->execute($this->form->getValues()));
     }
 }

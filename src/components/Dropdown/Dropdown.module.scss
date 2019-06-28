@@ -17,18 +17,21 @@
     border-radius: 2px;
 
     .item {
-      padding: 5px;
+      padding: 5px 10px;
 
       &:hover {
         background-color: $menu-hover-bg;
       }
     }
-
   }
 
   &.open {
     .list {
       display: block;
+    }
+
+    button {
+      background-color: $menu-hover-bg;
     }
   }
 }

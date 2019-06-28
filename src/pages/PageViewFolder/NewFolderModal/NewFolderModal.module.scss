@@ -1,0 +1,29 @@
+@import "../../../styles/common";
+
+.default {
+
+  background: $bg;
+
+  h2 {
+    padding: 4px 12px 0;
+    color: $text-color-1;
+    font-size: 1.1rem;
+  }
+
+  .form {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    min-height: 180px;
+    letter-spacing: .025em;
+
+    form {
+      width: 300px;
+      margin: 0 auto;
+
+      > div {
+        margin: 0 auto .9em;
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+@import "../../../styles/common";
+
+.default {
+  display: flex;
+
+  a {
+    display: block;
+    color: $text-color-1;
+    text-decoration: none;
+    padding: 4px 0;
+    font-size: large;
+
+    &:after {
+      content: '/';
+      padding: 0 4px;
+    }
+
+    &:last-child:after {
+      content: none;
+    }
+
+    svg {
+      padding-top: 5px;
+    }
+  }
+}

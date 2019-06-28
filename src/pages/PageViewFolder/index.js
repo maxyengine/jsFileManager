@@ -4,6 +4,8 @@ import { inject } from '@nrg/react-di'
 import Controller from './Controller'
 import Page from '../../components/Page'
 import ViewFolder from './ViewFolder'
+import Modal from '../../components/Modal'
+import NewFolderModal from './NewFolderModal'
 
 class PageViewFolder extends React.Component {
 
@@ -50,6 +52,7 @@ class PageViewFolder extends React.Component {
       <Page {...{isReady, error}}>
         <Provider store={controller.store}>
           <ViewFolder/>
+          <NewFolderModal/>
         </Provider>
       </Page>
     )

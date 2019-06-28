@@ -2,11 +2,12 @@ import React from 'react'
 import { inject } from '@nrg/react-di'
 import theme from './Login.module.scss'
 import UserLoginForm from '../../forms/UserLoginForm'
-import TextInput from './TextInput'
-import PasswordInput from './PasswordInput'
 import Page from '../../components/Page'
 import { Redirect } from 'react-router-dom'
 import { ValidationException } from '@nrg/http'
+import TextInput from '../../components/TextInput'
+import PasswordInput from '../../components/PasswordInput'
+import SubmitButton from '../../components/SubmitButton'
 
 const Component = class extends React.Component {
 
@@ -92,7 +93,7 @@ const Component = class extends React.Component {
               onChange={this.onChange}
               onBlur={this.onChange}
             />
-            <button>Login</button>
+            <SubmitButton>Login</SubmitButton>
           </form>
         </div>
       </Page>
@@ -100,11 +101,10 @@ const Component = class extends React.Component {
   }
 }
 
-const
-  dependencies = {
-    client: 'client',
-    authControl: 'authControl',
-    form: UserLoginForm
-  }
+const dependencies = {
+  client: 'client',
+  authControl: 'authControl',
+  form: UserLoginForm
+}
 
 export default inject(Component, dependencies)

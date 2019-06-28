@@ -1,6 +1,6 @@
 <?php
 
-namespace Nrg\Uploader\Action;
+namespace Nrg\Utility\Action;
 
 use Nrg\Http\Event\HttpExchangeEvent;
 use Nrg\Http\Value\HttpStatus;

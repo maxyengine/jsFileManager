@@ -1,0 +1,18 @@
+@import "../../styles/common";
+
+.default {
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  border-radius: $br;
+  line-height: $line-height;
+  font-family: $font-base;
+  font-size: $font-size-base;
+  padding: 8px 15px;
+  background: $accent;
+  color: #fff;
+
+  &:hover {
+    background: adjust-hue($accent, 30deg);
+  }
+}

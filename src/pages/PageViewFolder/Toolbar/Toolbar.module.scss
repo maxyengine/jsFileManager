@@ -1,0 +1,18 @@
+@import "../../../styles/common";
+
+.default {
+  display: flex;
+
+  button {
+    background-color: $menu-bg;
+    border: none;
+    color: $text-color-2;
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $menu-hover-bg;
+    }
+  }
+}

@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import StatusBar from '../StatusBar'
 import FileList from '../FileList'
 import NoMatchedFiles from '../NoMatchedFiles'
+import Toolbar from '../Toolbar'
+import Breadcrumbs from '../Breadcrumbs'
 
 class ViewFolder extends React.Component {
 
@@ -13,7 +14,8 @@ class ViewFolder extends React.Component {
     const files = '' === keywords ? directory.children : filteredFiles
 
     return (<>
-      <StatusBar/>
+      <Toolbar/>
+      <Breadcrumbs/>
       <FileList parent={parent} files={files}/>
     </>)
   }

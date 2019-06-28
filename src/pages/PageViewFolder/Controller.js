@@ -5,6 +5,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 const FETCH_DIRECTORY = 'FETCH_DIRECTORY'
 const DELETE_FILE = 'REMOVE_FILE'
 const SEARCH_FILES = 'SEARCH_FILES'
+const NEW_FOLDER_MODAL = 'NEW_FOLDER_MODAL'
 
 const store = Symbol()
 
@@ -19,7 +20,8 @@ export default class extends Value {
   initState = {
     directory: null,
     filteredFiles: [],
-    keywords: ''
+    keywords: '',
+    newFolderModal: true
   }
 
   constructor (...args) {
@@ -37,6 +39,10 @@ export default class extends Value {
 
   action (type, diff) {
     this.store.dispatch({type, state: {...this.state, ...diff}})
+  }
+
+  newFolderModal (isOpen) {
+    this.action(NEW_FOLDER_MODAL, {newFolderModal: isOpen})
   }
 
   async fetchDirectory (path) {

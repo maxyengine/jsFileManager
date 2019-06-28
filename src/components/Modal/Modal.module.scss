@@ -1,0 +1,35 @@
+@import "../../styles/common";
+
+.default {
+  position: fixed;
+  z-index: 998;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-Color: rgba(25, 25, 25, 0.25);
+
+  .popup {
+    z-index: 1000;
+    max-width: 500px;
+    position: relative;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+  }
+
+  .close {
+    border: none;
+    background: none;
+    position: absolute;
+    right: -15px;
+    top: -15px;
+    z-index: 1000;
+    font-size: 1em;
+    color: $accent;
+    &:hover {
+      color: adjust-hue($accent, 30deg);
+    }
+  }
+}
