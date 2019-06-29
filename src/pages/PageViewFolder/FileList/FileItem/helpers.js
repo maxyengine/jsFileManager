@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaFolder, FaFileImage, FaFile, FaFilePdf } from 'react-icons/fa'
-import Directory from '../../../entities/Directory'
+import Directory from '../../../../entities/Directory'
 
 //https://react-icons.netlify.com/#/icons/md
 

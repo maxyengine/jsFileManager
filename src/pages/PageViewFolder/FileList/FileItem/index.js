@@ -1,9 +1,9 @@
 import React from 'react'
 import theme from './FileItem.module.scss'
-import Controller from '../Controller'
+import Controller from '../../Controller'
 import { inject } from '@nrg/react-di'
 import { icon } from './helpers'
-import Directory from '../../../entities/Directory'
+import Directory from '../../../../entities/Directory'
 import { Link } from 'react-router-dom'
 
 const Component = class extends React.Component {

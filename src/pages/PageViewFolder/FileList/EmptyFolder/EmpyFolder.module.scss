@@ -1,4 +1,4 @@
-@import "../../../styles/common";
+@import "../../../../styles/common";
 
 .default {
 	display: flex;
@@ -9,6 +9,10 @@
 
 	> svg {
 		top: -.2em;
+
+		path, line, polyline {
+		  stroke: $text-color-2;
+		}
 	}
 
 	> span {

@@ -1,7 +1,7 @@
 import React from 'react'
-import FileItem from '../FileItem'
+import FileItem from './FileItem'
 import theme from './FileList.module.scss'
-import ParentItem from '../ParentItem'
+import ParentItem from './ParentItem'
 import { connect } from 'react-redux'
 import Spinner from './Spinner'
 
