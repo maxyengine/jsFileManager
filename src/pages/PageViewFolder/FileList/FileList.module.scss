@@ -6,6 +6,8 @@
   display: block;
   overflow: auto;
   color: $text-color-1;
+  background-color: $bg;
+  min-height: 800px;
 
   & > * {
     padding: 0;

@@ -23,9 +23,9 @@ class Toolbar extends React.Component {
   }
 
   render () {
-    const {keywords, directory, filteredFiles} = this.props
+    /*const {keywords, directory, filteredFiles} = this.props
     const files = directory.isEmpty ? [] : directory.children
-    const count = ('' === keywords ? files : filteredFiles).length
+    const count = ('' === keywords ? files : filteredFiles).length*/
 
     return (
       <div className={theme.default}>

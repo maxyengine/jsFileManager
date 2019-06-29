@@ -6,8 +6,8 @@ const lastModified = Symbol()
 
 class File {
 
-  constructor (raw) {
-    this[path] = new Path(raw.path)
+  constructor (raw, isDir = false) {
+    this[path] = new Path(raw.path, isDir)
     this[size] = raw.size && new Size(raw.size)
     this[lastModified] = raw.lastModified && new Date(raw.lastModified)
   }

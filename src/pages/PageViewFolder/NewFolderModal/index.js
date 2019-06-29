@@ -8,6 +8,7 @@ import TextInput from '../../../components/TextInput'
 import SubmitButton from '../../../components/SubmitButton'
 import NewFolderForm from '../../../forms/NewFolderForm'
 import { ValidationException } from '@nrg/http'
+import { withRouter } from 'react-router'
 
 class NewFolderModal extends React.Component {
 
@@ -17,35 +18,35 @@ class NewFolderModal extends React.Component {
 
     this.state = {
       values: form.values,
-      errors: form.errors
+      errors: form.errors,
+      loading: false
     }
   }
 
   onSubmit = async (event) => {
     event.preventDefault()
-    const {form} = this.props
+
+    this.setState({errors: {}, loading: true})
+
+    const {form, controller, history} = this.props
 
     form.values = this.state.values
 
     if (form.hasErrors) {
-      return this.setState({errors: form.errors})
+      return this.setState({errors: form.errors, loading: false})
     }
 
     try {
-      this.authControl.login(
-        await this.client.fetchLogin(form.values)
-      )
-      form.reset()
-      this.setState({
-        values: form.values,
-        errors: form.errors
-      })
+      const directory = await controller.createDirectory(form.values)
+      this.setState({loading: false})
+      history.push(`/?path=${encodeURIComponent(directory.parent.path.value)}`)
+      this.onClose()
 
     } catch (error) {
       if (error instanceof ValidationException) {
-        this.setState({errors: error.details})
+        this.setState({errors: error.details, loading: false})
       } else {
-
+        console.error(error)
       }
     }
   }
@@ -62,12 +63,20 @@ class NewFolderModal extends React.Component {
   }
 
   onClose = () => {
-    const {controller} = this.props
+    const {controller, form} = this.props
+
+    form.reset()
+
+    this.setState({
+      values: form.values,
+      errors: form.errors
+    })
+
     controller.newFolderModal(false)
   }
 
   render () {
-    const {values, errors} = this.state
+    const {values, errors, loading} = this.state
     const {newFolderModal} = this.props
 
     return (
@@ -84,11 +93,11 @@ class NewFolderModal extends React.Component {
                 name={'path'}
                 value={values.path}
                 error={errors.path}
-                autoComplete={null}
+                autoComplete={'off'}
                 onChange={this.onChange}
                 onBlur={this.onChange}
               />
-              <SubmitButton>Create</SubmitButton>
+              <SubmitButton loading={loading}>Create</SubmitButton>
             </form>
           </div>
         </div>
@@ -104,4 +113,4 @@ const dependencies = {
   form: NewFolderForm
 }
 
-export default inject(connect(mapStateToProps)(NewFolderModal), dependencies)
+export default withRouter(inject(connect(mapStateToProps)(NewFolderModal), dependencies))

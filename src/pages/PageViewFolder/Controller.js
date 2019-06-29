@@ -21,7 +21,7 @@ export default class extends Value {
     directory: null,
     filteredFiles: [],
     keywords: '',
-    newFolderModal: true
+    newFolderModal: false
   }
 
   constructor (...args) {
@@ -46,9 +46,16 @@ export default class extends Value {
   }
 
   async fetchDirectory (path) {
+    this.action(FETCH_DIRECTORY, {directory: null, keywords: ''})
     const directory = await this.client.fetchDirectory(path)
+    this.action(FETCH_DIRECTORY, {directory})
+  }
 
-    this.action(FETCH_DIRECTORY, {directory, keywords: ''})
+  async createDirectory ({path}) {
+    const {directory} = this.state
+    const newPath = directory.path.join(path, true)
+
+    return await this.client.createDirectory(newPath.value)
   }
 
   async deleteFile (file) {

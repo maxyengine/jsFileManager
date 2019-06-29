@@ -2,7 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import theme from './Breadcrumbs.module.scss'
 import { Link } from 'react-router-dom'
-import {FaHome} from 'react-icons/fa'
+import { FaHome } from 'react-icons/fa'
+import Spinner from './Spinner'
 
 class Breadcrumbs extends React.Component {
 
@@ -15,7 +16,7 @@ class Breadcrumbs extends React.Component {
       crumbs.unshift({
         fileName: path.fileName.value,
         pathname: '/',
-        search: `?path=${path}`
+        search: `?path=${encodeURIComponent(path)}`
       })
 
       path = path.parent
@@ -25,15 +26,15 @@ class Breadcrumbs extends React.Component {
   }
 
   render () {
-    const crumbs = this.createCrumbs()
+    const {directory} = this.props
 
     return (
       <div className={theme.default}>
-        {crumbs.map(({fileName, pathname, search}, index) => {
-          return 0 === index ?
-            <Link key={search} to={{pathname, search}}><FaHome/></Link> :
-            <Link key={search} to={{pathname, search}}>{fileName}</Link>
-        })}
+        {directory ?
+          this.createCrumbs().map(({fileName, pathname, search}, index) =>
+            <Link key={search} to={{pathname, search}}>{0 === index ? <FaHome/> : fileName}</Link>
+          ) :
+          <Spinner/>}
       </div>
     )
   }

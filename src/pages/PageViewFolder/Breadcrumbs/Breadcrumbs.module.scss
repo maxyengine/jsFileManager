@@ -2,6 +2,8 @@
 
 .default {
   display: flex;
+  background: $bg;
+  min-height: 36px;
 
   a {
     display: block;

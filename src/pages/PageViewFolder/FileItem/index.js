@@ -28,7 +28,9 @@ const Component = class extends React.Component {
         </td>
         <td>
           <div>
-            <Link to={{pathname: '/', search: `?path=${path}`}}>{baseName}</Link>
+            <Link to={{pathname: '/', search: `?path=${encodeURIComponent(path)}`}}>
+              {baseName}
+            </Link>
           </div>
         </td>
         <td>

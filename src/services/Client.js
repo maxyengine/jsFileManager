@@ -32,6 +32,12 @@ export default class extends Client {
     return this.fileFactory.createDirectory(raw)
   }
 
+  async createDirectory (path) {
+    const raw = await this.post('/directory/create', {path: path})
+
+    return this.fileFactory.createDirectory(raw)
+  }
+
   async deleteFile (path) {
     await this.post('/delete', {path})
   }

@@ -7,7 +7,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-Color: rgba(25, 25, 25, 0.25);
+  background-color: rgba(25, 25, 25, 0.25);
 
   .popup {
     z-index: 1000;
@@ -16,15 +16,18 @@
     top: 25%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #ffffff;
+    background: $bg;
+    border: 1px $menu-border-color solid;
+    border-radius: 4px;
+    padding: 2px;
   }
 
   .close {
     border: none;
     background: none;
     position: absolute;
-    right: -15px;
-    top: -15px;
+    right: 9px;
+    top: 9px;
     z-index: 1000;
     font-size: 1em;
     color: $accent;

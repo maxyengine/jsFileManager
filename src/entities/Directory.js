@@ -6,7 +6,7 @@ const children = Symbol()
 class Directory extends File {
 
   constructor (raw) {
-    super(raw)
+    super(raw, true)
 
     this[children] = raw.children && [...raw.children]
 
@@ -29,6 +29,10 @@ class Directory extends File {
 
   get isEmpty () {
     return !this.children || !this.children.length
+  }
+
+  get storageId () {
+    return this.path.storageId
   }
 }
 
