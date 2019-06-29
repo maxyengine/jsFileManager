@@ -17,6 +17,7 @@ import { ServiceLocator, createInjector } from '@nrg/react-di'
 import { Endpoint } from '@nrg/http'
 import { Value } from '@nrg/core'
 import { apiUrl } from './devConfig'
+import AppWrapper from './components/AppWrapper'
 
 window.$nrg = window.$nrg || {}
 var $nrg = window.$nrg
@@ -50,14 +51,15 @@ $nrg.Uploader = $nrg.Uploader || class extends Value {
     const app = (
       <Router>
         <ServiceLocator injector={injector}>
+          <AppWrapper>
+              {/*<NavMenu/>
+            <PrivateRoute exact path="/" component={PageUploader}/>
+            <PrivateRoute exact path="/view-folder" component={PageViewFolder}/>
+            <Route path="/login" component={PageLogin}/>*/}
 
-          {/*<NavMenu/>
-          <PrivateRoute exact path="/" component={PageUploader}/>
-          <PrivateRoute exact path="/view-folder" component={PageViewFolder}/>
-          <Route path="/login" component={PageLogin}/>*/}
-
-          <PrivateRoute exact path="/" component={PageViewFolder}/>
-          <Route path="/login" component={PageLogin}/>
+            <PrivateRoute exact path="/" component={PageViewFolder}/>
+            <Route path="/login" component={PageLogin}/>
+          </AppWrapper>
 
         </ServiceLocator>
       </Router>

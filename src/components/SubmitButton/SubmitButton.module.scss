@@ -11,8 +11,14 @@
   padding: 8px 15px;
   background: $accent;
   color: #fff;
+  border: none;
+  cursor: pointer;
 
   &:hover {
     background: adjust-hue($accent, 30deg);
+  }
+
+  &:focus, &:active {
+    outline: none;
   }
 }

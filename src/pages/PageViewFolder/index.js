@@ -6,6 +6,7 @@ import NewFolderModal from './NewFolderModal'
 import Toolbar from './Toolbar'
 import Breadcrumbs from './Breadcrumbs'
 import FileList from './FileList'
+import UploadFilesModal from './UploadFilesModal'
 
 class PageViewFolder extends React.Component {
 
@@ -32,6 +33,7 @@ class PageViewFolder extends React.Component {
         <Breadcrumbs/>
         <FileList/>
         <NewFolderModal/>
+        <UploadFilesModal/>
       </Provider>
     )
   }

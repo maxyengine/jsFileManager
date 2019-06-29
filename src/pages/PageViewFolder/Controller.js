@@ -6,6 +6,7 @@ const FETCH_DIRECTORY = 'FETCH_DIRECTORY'
 const DELETE_FILE = 'REMOVE_FILE'
 const SEARCH_FILES = 'SEARCH_FILES'
 const NEW_FOLDER_MODAL = 'NEW_FOLDER_MODAL'
+const UPLOAD_FILES_MODAL = 'UPLOAD_FILES_MODAL'
 
 const store = Symbol()
 
@@ -21,7 +22,8 @@ export default class extends Value {
     directory: null,
     filteredFiles: [],
     keywords: '',
-    newFolderModal: false
+    newFolderModal: false,
+    uploadFilesModal: false
   }
 
   constructor (...args) {
@@ -43,6 +45,10 @@ export default class extends Value {
 
   newFolderModal (isOpen) {
     this.action(NEW_FOLDER_MODAL, {newFolderModal: isOpen})
+  }
+
+  uploadFilesModal (isOpen) {
+    this.action(UPLOAD_FILES_MODAL, {uploadFilesModal: isOpen})
   }
 
   async fetchDirectory (path) {

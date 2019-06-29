@@ -6,6 +6,7 @@ import theme from './Toolbar.module.scss'
 import { FaPlus, FaUpload, FaRegCopy, FaFileArchive } from 'react-icons/fa'
 import { MdClose } from 'react-icons/md'
 import Dropdown from '../../../components/Dropdown'
+import UploadButton from './UploadButton'
 
 class Toolbar extends React.Component {
 
@@ -20,6 +21,15 @@ class Toolbar extends React.Component {
 
   newHyperlink = () => {
     console.log('newHyperlink')
+  }
+
+  uploadFiles = (e) => {
+    e.preventDefault()
+    const {files} = e.dataTransfer || e.target
+    console.log(files)
+
+    /*const {controller} = this.props
+    controller.uploadFilesModal(true)*/
   }
 
   render () {
@@ -37,7 +47,7 @@ class Toolbar extends React.Component {
             {label: 'Hyperlink', onClick: this.newHyperlink}
           ]}
         />
-        <button><FaUpload/></button>
+        <UploadButton onSelectFiles={this.uploadFiles}/>
         <button><FaRegCopy/></button>
         <button><MdClose/></button>
         <button><FaFileArchive/></button>
