@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { inject } from '@nrg/react-di'
 import Controller from '../Controller'
 import theme from './Toolbar.module.scss'
-import { FaPlus, FaUpload, FaRegCopy, FaFileArchive } from 'react-icons/fa'
+import { FaPlus, FaRegCopy, FaFileArchive } from 'react-icons/fa'
 import { MdClose } from 'react-icons/md'
 import Dropdown from '../../../components/Dropdown'
 import UploadButton from './UploadButton'
@@ -25,18 +25,15 @@ class Toolbar extends React.Component {
 
   uploadFiles = (e) => {
     e.preventDefault()
-    const {files} = e.dataTransfer || e.target
-    console.log(files)
 
-    /*const {controller} = this.props
-    controller.uploadFilesModal(true)*/
+    const {controller} = this.props
+    const {files} = e.dataTransfer || e.target
+
+    controller.uploadFiles(files)
+    controller.uploadFilesModal(true)
   }
 
   render () {
-    /*const {keywords, directory, filteredFiles} = this.props
-    const files = directory.isEmpty ? [] : directory.children
-    const count = ('' === keywords ? files : filteredFiles).length*/
-
     return (
       <div className={theme.default}>
         <Dropdown

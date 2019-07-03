@@ -70,8 +70,6 @@ export default class extends Client {
   }
 
   createFileUploader () {
-    return super.createFileUploader('/upload', {}, {
-      path: `${this.storageId}://`,
-    })
+    return super.createFileUploader('/file/upload')
   }
 }

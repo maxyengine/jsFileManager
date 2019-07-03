@@ -8,9 +8,14 @@ class UploadButton extends React.Component {
     this.fileInput.click()
   }
 
-  render () {
+  onChange = (e) => {
     const {onSelectFiles} = this.props
 
+    onSelectFiles && onSelectFiles(e)
+    this.fileInput.value = null
+  }
+
+  render () {
     return (
       <button className={theme.default} onClick={this.onBrowseFiles}>
         <FaUpload/>
@@ -18,10 +23,7 @@ class UploadButton extends React.Component {
           type="file"
           multiple={true}
           ref={ref => this.fileInput = ref}
-          onChange={(e) => {
-            onSelectFiles && onSelectFiles(e)
-            this.fileInput.value = null
-          }}
+          onChange={this.onChange}
         />
       </button>
     )

@@ -1,10 +1,14 @@
 import { Value } from '@nrg/core'
 import { createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import uuidv4 from 'uuid/v4'
 
+const LOAD_CONFIG = 'LOAD_CONFIG'
 const FETCH_DIRECTORY = 'FETCH_DIRECTORY'
 const DELETE_FILE = 'REMOVE_FILE'
 const SEARCH_FILES = 'SEARCH_FILES'
+const UPLOAD_FILES = 'UPLOAD_FILES'
+const SUCCESS_FILE_UPLOAD = 'SUCCESS_FILE_UPLOAD'
 const NEW_FOLDER_MODAL = 'NEW_FOLDER_MODAL'
 const UPLOAD_FILES_MODAL = 'UPLOAD_FILES_MODAL'
 
@@ -19,9 +23,13 @@ export default class extends Value {
   }
 
   initState = {
+    config: {},
     directory: null,
-    filteredFiles: [],
     keywords: '',
+    filteredFiles: [],
+    uploadFiles: [],
+    uploadTotal: 0,
+    uploadCompleted: 0,
     newFolderModal: false,
     uploadFilesModal: false
   }
@@ -51,6 +59,11 @@ export default class extends Value {
     this.action(UPLOAD_FILES_MODAL, {uploadFilesModal: isOpen})
   }
 
+  async loadConfig () {
+    const config = await this.client.fetchConfig()
+    this.action(LOAD_CONFIG, {config})
+  }
+
   async fetchDirectory (path) {
     this.action(FETCH_DIRECTORY, {directory: null, keywords: ''})
     const directory = await this.client.fetchDirectory(path)
@@ -63,6 +76,37 @@ export default class extends Value {
 
     return await this.client.createDirectory(newPath.value)
   }
+
+  uploadFiles (files) {
+    for (const file of files) {
+      file._id = uuidv4()
+    }
+
+    this.action(UPLOAD_FILES, {
+      uploadFiles: [...files, ...this.state.uploadFiles],
+      uploadTotal: this.state.uploadTotal + files.length
+    })
+  }
+
+  successFileUpload () {
+    this.action(SUCCESS_FILE_UPLOAD, {
+      uploadCompleted: this.state.uploadCompleted + 1
+    })
+  }
+
+  /*removeFile (file, hasUploaded = true) {
+    const total = this.state.status.total - 1
+    let completed = this.state.status.completed
+
+    if (hasUploaded) {
+      completed--
+    }
+
+    this.runAction(REMOVE_FILE, {
+      files: this.state.files.filter(item => (item !== file)),
+      status: {...this.state.status, total, completed}
+    })
+  }*/
 
   async deleteFile (file) {
     try {

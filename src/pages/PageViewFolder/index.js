@@ -13,10 +13,14 @@ class PageViewFolder extends React.Component {
   async fetchData () {
     const {controller} = this.props
     const path = new URLSearchParams(this.props.location.search).get('path')
+
     await controller.fetchDirectory(path)
   }
 
-  componentDidMount () {
+  async componentDidMount () {
+    const {controller} = this.props
+
+    await controller.loadConfig()
     this.fetchData()
   }
 

@@ -1,0 +1,15 @@
+@import "../../../../styles/common";
+
+.default {
+  > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    > li {
+      + li {
+        margin-top: 10px;
+      }
+    }
+  }
+}
