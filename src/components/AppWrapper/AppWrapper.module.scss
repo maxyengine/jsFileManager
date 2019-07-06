@@ -1,12 +1,12 @@
 @import "../../styles/common";
 
 .default {
-  padding: 50px;
+  //padding: 50px;
   background-color: $bg;
   font-family: $font-base;
   font-size: $font-size-base;
 
-  &, * {
+  *, & {
     box-sizing: border-box;
     transition: all $time $func;
   }

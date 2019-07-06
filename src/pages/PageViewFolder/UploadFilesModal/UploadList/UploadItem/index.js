@@ -7,10 +7,10 @@ import { ValidationException } from '@nrg/http'
 import fileSize from 'filesize'
 import FileElement from './FileElement'
 
-const STATUS_PROGRESS = 0
-const STATUS_SUCCESS = 1
-const STATUS_FATAL = 2
-const STATUS_ERROR = 3
+const STATUS_PROGRESS = 'progress'
+const STATUS_SUCCESS = 'success'
+const STATUS_FATAL = 'fatal'
+const STATUS_ERROR = 'error'
 
 class UploadItem extends React.Component {
 
@@ -104,12 +104,17 @@ class UploadItem extends React.Component {
 
     return (
       <li className={this.className}>
+
         <div className={theme.inner}>
+
           <div className={theme.progress} style={{width: `${this.percent}%`}}/>
+
           <div className={theme.name} title={fileName}>{fileName}</div>
+
           <div className={theme.size}>
             <span>{fileSize(loaded)}</span>{fileSize(file.size)}
           </div>
+
           <div className={theme.controls}>
             <button className={theme.btnRetry} title="Retry" onClick={this.onRetry}>
               <i className="nrg-retry"/>
@@ -121,7 +126,9 @@ class UploadItem extends React.Component {
               <i className="nrg-across"/>
             </button>
           </div>
+
         </div>
+
         <div className={theme.errorMessage}>{errorMessage}</div>
       </li>
     )
