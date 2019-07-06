@@ -2,13 +2,20 @@ import { Value } from '@nrg/core'
 import { createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import uuidv4 from 'uuid/v4'
+import { ValidationException } from '@nrg/http'
+import FileElement from '../../forms/elements/FileElement'
+import { STATUS_ERROR, STATUS_FATAL, STATUS_PROGRESS, STATUS_START, STATUS_SUCCESS } from './uploadItemsStatuses'
 
 const LOAD_CONFIG = 'LOAD_CONFIG'
+
 const FETCH_DIRECTORY = 'FETCH_DIRECTORY'
 const DELETE_FILE = 'REMOVE_FILE'
 const SEARCH_FILES = 'SEARCH_FILES'
-const UPLOAD_FILES = 'UPLOAD_FILES'
+
+const UPLOAD_FILE = 'UPLOAD_FILE'
+const PROGRESS_FILE_UPLOAD = 'PROGRESS_FILE_UPLOAD'
 const SUCCESS_FILE_UPLOAD = 'SUCCESS_FILE_UPLOAD'
+
 const NEW_FOLDER_MODAL = 'NEW_FOLDER_MODAL'
 const UPLOAD_FILES_MODAL = 'UPLOAD_FILES_MODAL'
 
@@ -18,7 +25,8 @@ export default class extends Value {
 
   static get services () {
     return {
-      client: 'client'
+      client: 'client',
+      fileFactory: 'fileFactory'
     }
   }
 
@@ -27,9 +35,7 @@ export default class extends Value {
     directory: null,
     keywords: '',
     filteredFiles: [],
-    uploadFiles: [],
-    uploadTotal: 0,
-    uploadCompleted: 0,
+    uploadList: [],
     newFolderModal: false,
     uploadFilesModal: false
   }
@@ -78,19 +84,82 @@ export default class extends Value {
   }
 
   uploadFiles (files) {
-    for (const file of files) {
-      file._id = uuidv4()
-    }
+    const {config, directory} = this.state
 
-    this.action(UPLOAD_FILES, {
-      uploadFiles: [...files, ...this.state.uploadFiles],
-      uploadTotal: this.state.uploadTotal + files.length
+    for (const file of files) {
+      const {uploadList} = this.state
+
+      const uploadItem = {
+        status: STATUS_START,
+        key: uuidv4(),
+        file: file,
+        fileName: file.name,
+        loaded: 0,
+        errorMessage: null
+      }
+
+      this.action(UPLOAD_FILE, {
+        uploadList: [uploadItem, ...uploadList],
+      })
+
+      const element = new FileElement({config, value: file})
+
+      if (element.hasError) {
+        this.errorFileUpload(uploadItem.key, new ValidationException({
+          details: {file: element.error}
+        }))
+        continue
+      }
+
+      const uploader = this.client.createFileUploader({}, {path: directory.path.value})
+
+      uploader.on('progress', ({loaded}) => {
+        this.progressFileUpload(uploadItem.key, loaded > file.size ? file.size : loaded)
+      })
+
+      uploader.upload(file)
+        .then(raw => {
+          this.successFileUpload(uploadItem.key, this.fileFactory.createFile(raw))
+        })
+        .catch(error => {
+          this.errorFileUpload(uploadItem.key, error)
+        })
+    }
+  }
+
+  progressFileUpload (key, loaded) {
+    this.action(PROGRESS_FILE_UPLOAD, {
+      uploadList: this.state.uploadList.map(item => {
+        return item.key !== key ? item : {
+          ...item,
+          status: STATUS_PROGRESS,
+          loaded,
+        }
+      })
     })
   }
 
-  successFileUpload () {
+  successFileUpload (key, file) {
     this.action(SUCCESS_FILE_UPLOAD, {
-      uploadCompleted: this.state.uploadCompleted + 1
+      uploadList: this.state.uploadList.map(item => {
+        return item.key !== key ? item : {
+          ...item,
+          status: STATUS_SUCCESS,
+          fileName: file.path.fileName.value,
+        }
+      })
+    })
+  }
+
+  errorFileUpload (key, error) {
+    this.action(SUCCESS_FILE_UPLOAD, {
+      uploadList: this.state.uploadList.map(item => {
+        return item.key !== key ? item : {
+          ...item,
+          status: error instanceof ValidationException ? STATUS_FATAL : STATUS_ERROR,
+          errorMessage: error instanceof ValidationException ? error.details.file : error.reasonPhrase
+        }
+      })
     })
   }
 

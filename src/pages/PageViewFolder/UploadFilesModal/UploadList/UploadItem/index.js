@@ -3,43 +3,33 @@ import { connect } from 'react-redux'
 import { inject } from '@nrg/react-di'
 import Controller from '../../../Controller'
 import theme from './FileItem.module.scss'
-import { ValidationException } from '@nrg/http'
 import fileSize from 'filesize'
-import FileElement from './FileElement'
-
-const STATUS_PROGRESS = 'progress'
-const STATUS_SUCCESS = 'success'
-const STATUS_FATAL = 'fatal'
-const STATUS_ERROR = 'error'
+import { STATUS_ERROR, STATUS_FATAL, STATUS_PROGRESS, STATUS_START, STATUS_SUCCESS } from '../../../uploadItemsStatuses'
 
 class UploadItem extends React.Component {
 
-  state = {
-    loaded: 0,
-    status: STATUS_PROGRESS,
-    errorMessage: '',
-    fileName: null
-  }
-
   get className () {
+    const {uploadItem: {status}} = this.props
+
     return {
+      [STATUS_START]: `${theme.default} ${theme.loading}`,
       [STATUS_PROGRESS]: `${theme.default} ${theme.loading}`,
       [STATUS_SUCCESS]: `${theme.default} ${theme.success}`,
       [STATUS_ERROR]: `${theme.default} ${theme.error}`,
       [STATUS_FATAL]: `${theme.default} ${theme.error} ${theme.fatal}`,
-    }[this.state.status]
+    }[status]
   }
 
   get percent () {
-    const {file} = this.props
-    const {loaded} = this.state
+    const {uploadItem: {file, loaded}} = this.props
 
     return loaded <= file.size ? Math.ceil(100 * loaded / file.size) : null
   }
 
-  componentDidMount () {
-    const {file: value, config} = this.props
-    const element = new FileElement({config, value})
+  /*componentDidMount () {
+    const {uploadItem: {file, status}, config} = this.props
+
+    const element = new FileElement({config, value: file})
 
     if (element.hasError) {
       return this.setState({
@@ -49,24 +39,24 @@ class UploadItem extends React.Component {
     }
 
     this.uploadFile()
-  }
+  }*/
 
-  componentWillUnmount () {
-    if (this.uploader && STATUS_SUCCESS !== this.state.status) {
+  /*componentWillUnmount () {
+    const {uploadItem: {status}} = this.props
+
+    if (this.uploader && STATUS_SUCCESS !== status) {
       this.uploader.abort()
     }
-  }
+  }*/
 
-  async uploadFile () {
-    const {file, client, controller, fileFactory, directory} = this.props
+  /*async uploadFile () {
+    const {client, controller, fileFactory, directory, uploadItem: {key, file}} = this.props
+
     this.uploader = client.createFileUploader()
     this.uploader.bodyParams = {path: directory.path.value}
 
     this.uploader.on('progress', ({loaded}) => {
-      if (loaded > file.size) {
-        loaded = file.size
-      }
-      this.setState({loaded})
+      controller.progressFileUpload(key, loaded > file.size ? file.size : loaded)
     })
 
     try {
@@ -74,14 +64,15 @@ class UploadItem extends React.Component {
       const entity = fileFactory.createFile(raw)
       const fileName = entity.path.fileName.value
 
-      this.setState({status: STATUS_SUCCESS, fileName}, () => controller.successFileUpload())
+      controller.successFileUpload(key, fileName)
+
     } catch (error) {
-      return this.setState({
+      /!*return this.setState({
         status: error instanceof ValidationException ? STATUS_FATAL : STATUS_ERROR,
         errorMessage: error instanceof ValidationException ? error.details.file : error.reasonPhrase
-      })
+      })*!/
     }
-  }
+  }*/
 
   onClose = () => {
     const {controller} = this.props
@@ -94,27 +85,21 @@ class UploadItem extends React.Component {
   }
 
   onRetry = () => {
-    this.setState({status: STATUS_PROGRESS}, () => this.uploadFile())
+    //this.setState({status: STATUS_PROGRESS}, () => this.uploadFile())
   }
 
   render () {
-    const {file} = this.props
-    const {loaded, errorMessage} = this.state
-    const fileName = this.state.fileName || file.name
+    const {uploadItem: {file, fileName, loaded, errorMessage}} = this.props
 
     return (
       <li className={this.className}>
 
         <div className={theme.inner}>
-
           <div className={theme.progress} style={{width: `${this.percent}%`}}/>
-
           <div className={theme.name} title={fileName}>{fileName}</div>
-
           <div className={theme.size}>
             <span>{fileSize(loaded)}</span>{fileSize(file.size)}
           </div>
-
           <div className={theme.controls}>
             <button className={theme.btnRetry} title="Retry" onClick={this.onRetry}>
               <i className="nrg-retry"/>
@@ -126,9 +111,7 @@ class UploadItem extends React.Component {
               <i className="nrg-across"/>
             </button>
           </div>
-
         </div>
-
         <div className={theme.errorMessage}>{errorMessage}</div>
       </li>
     )

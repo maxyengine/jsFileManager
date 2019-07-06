@@ -1,6 +1,6 @@
 import { Element } from '@nrg/form'
-import FileExtensionValidator from './FileExtensionValidator'
-import FileSizeValidator from './FileSizeValidator'
+import FileExtensionValidator from '../validators/FileExtensionValidator'
+import FileSizeValidator from '../validators/FileSizeValidator'
 
 export default class extends Element {
 

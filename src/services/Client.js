@@ -69,7 +69,7 @@ export default class extends Client {
     )
   }
 
-  createFileUploader () {
-    return super.createFileUploader('/file/upload')
+  createFileUploader (queryParams = {}, bodyParams = {}, request = {}) {
+    return super.createFileUploader('/file/upload', queryParams, bodyParams, request)
   }
 }

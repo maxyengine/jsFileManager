@@ -9,19 +9,19 @@ import UploadItem from './UploadItem'
 class UploadList extends React.Component {
 
   render () {
-    const {uploadFiles} = this.props
+    const {uploadList} = this.props
 
     return (
       <div className={theme.default}>
         <ul>
-          {uploadFiles.map(file => <UploadItem key={file._id} file={file}/>)}
+          {uploadList.map(uploadItem => <UploadItem key={uploadItem.key} uploadItem={uploadItem}/>)}
         </ul>
       </div>
     )
   }
 }
 
-const mapStateToProps = ({uploadFiles}) => ({uploadFiles})
+const mapStateToProps = ({uploadList}) => ({uploadList})
 const dependencies = {controller: Controller}
 
 export default inject(connect(mapStateToProps)(UploadList), dependencies)
