@@ -1,5 +1,0 @@
-export const STATUS_START = 'start'
-export const STATUS_PROGRESS = 'progress'
-export const STATUS_SUCCESS = 'success'
-export const STATUS_FATAL = 'fatal'
-export const STATUS_ERROR = 'error'

@@ -4,7 +4,13 @@ import { inject } from '@nrg/react-di'
 import Controller from '../../../Controller'
 import theme from './FileItem.module.scss'
 import fileSize from 'filesize'
-import { STATUS_ERROR, STATUS_FATAL, STATUS_PROGRESS, STATUS_START, STATUS_SUCCESS } from '../../../uploadItemsStatuses'
+import {
+  UPLOAD_STATUS_ERROR,
+  UPLOAD_STATUS_FATAL,
+  UPLOAD_STATUS_PROGRESS,
+  UPLOAD_STATUS_START,
+  UPLOAD_STATUS_SUCCESS
+} from '../../../constants'
 
 class UploadItem extends React.Component {
 
@@ -12,11 +18,11 @@ class UploadItem extends React.Component {
     const {uploadItem: {status}} = this.props
 
     return {
-      [STATUS_START]: `${theme.default} ${theme.loading}`,
-      [STATUS_PROGRESS]: `${theme.default} ${theme.loading}`,
-      [STATUS_SUCCESS]: `${theme.default} ${theme.success}`,
-      [STATUS_ERROR]: `${theme.default} ${theme.error}`,
-      [STATUS_FATAL]: `${theme.default} ${theme.error} ${theme.fatal}`,
+      [UPLOAD_STATUS_START]: `${theme.default} ${theme.loading}`,
+      [UPLOAD_STATUS_PROGRESS]: `${theme.default} ${theme.loading}`,
+      [UPLOAD_STATUS_SUCCESS]: `${theme.default} ${theme.success}`,
+      [UPLOAD_STATUS_ERROR]: `${theme.default} ${theme.error}`,
+      [UPLOAD_STATUS_FATAL]: `${theme.default} ${theme.error} ${theme.fatal}`,
     }[status]
   }
 
@@ -76,7 +82,7 @@ class UploadItem extends React.Component {
 
   onClose = () => {
     const {controller} = this.props
-    controller.removeFile(this.props.file, STATUS_SUCCESS === this.state.status)
+    controller.removeFile(this.props.file, UPLOAD_STATUS_SUCCESS === this.state.status)
   }
 
   onView = () => {
