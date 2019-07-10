@@ -10,7 +10,7 @@ import {
   UPLOAD_STATUS_FATAL,
   UPLOAD_STATUS_PROGRESS,
   UPLOAD_STATUS_START,
-  UPLOAD_STATUS_SUCCESS
+  UPLOAD_STATUS_SUCCESS, UPLOAD_STATUS_COMPETE, ACTION_COMPLETE_FILE_UPLOAD
 } from '../constants'
 import TraitController from './TraitController'
 
@@ -26,10 +26,7 @@ export default class UploadController extends TraitController {
   get assignments () {
     return [
       'uploadFilesModal',
-      'uploadFiles',
-      'progressFileUpload',
-      'successFileUpload',
-      'errorFileUpload',
+      'uploadFiles'
     ]
   }
 
@@ -97,6 +94,17 @@ export default class UploadController extends TraitController {
         ...item,
         status: UPLOAD_STATUS_SUCCESS,
         fileName: file.path.fileName.value,
+      })
+    })
+
+    setTimeout(() => this.completeFileUpload(key), 2000)
+  }
+
+  completeFileUpload (key) {
+    this.action(ACTION_COMPLETE_FILE_UPLOAD, {
+      uploadList: this.state.uploadList.map(item => item.key !== key ? item : {
+        ...item,
+        status: UPLOAD_STATUS_COMPETE,
       })
     })
   }

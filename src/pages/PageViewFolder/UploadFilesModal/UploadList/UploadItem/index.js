@@ -5,6 +5,7 @@ import Controller from '../../../Controller'
 import theme from './FileItem.module.scss'
 import fileSize from 'filesize'
 import {
+  UPLOAD_STATUS_COMPETE,
   UPLOAD_STATUS_ERROR,
   UPLOAD_STATUS_FATAL,
   UPLOAD_STATUS_PROGRESS,
@@ -21,6 +22,7 @@ class UploadItem extends React.Component {
       [UPLOAD_STATUS_START]: `${theme.default} ${theme.loading}`,
       [UPLOAD_STATUS_PROGRESS]: `${theme.default} ${theme.loading}`,
       [UPLOAD_STATUS_SUCCESS]: `${theme.default} ${theme.success}`,
+      [UPLOAD_STATUS_COMPETE]: `${theme.default}`,
       [UPLOAD_STATUS_ERROR]: `${theme.default} ${theme.error}`,
       [UPLOAD_STATUS_FATAL]: `${theme.default} ${theme.error} ${theme.fatal}`,
     }[status]
