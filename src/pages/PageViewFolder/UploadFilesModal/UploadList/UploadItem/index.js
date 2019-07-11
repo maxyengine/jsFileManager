@@ -34,66 +34,19 @@ class UploadItem extends React.Component {
     return loaded <= file.size ? Math.ceil(100 * loaded / file.size) : null
   }
 
-  /*componentDidMount () {
-    const {uploadItem: {file, status}, config} = this.props
-
-    const element = new FileElement({config, value: file})
-
-    if (element.hasError) {
-      return this.setState({
-        status: STATUS_FATAL,
-        errorMessage: element.error
-      })
-    }
-
-    this.uploadFile()
-  }*/
-
-  /*componentWillUnmount () {
-    const {uploadItem: {status}} = this.props
-
-    if (this.uploader && STATUS_SUCCESS !== status) {
-      this.uploader.abort()
-    }
-  }*/
-
-  /*async uploadFile () {
-    const {client, controller, fileFactory, directory, uploadItem: {key, file}} = this.props
-
-    this.uploader = client.createFileUploader()
-    this.uploader.bodyParams = {path: directory.path.value}
-
-    this.uploader.on('progress', ({loaded}) => {
-      controller.progressFileUpload(key, loaded > file.size ? file.size : loaded)
-    })
-
-    try {
-      const raw = await this.uploader.upload(file)
-      const entity = fileFactory.createFile(raw)
-      const fileName = entity.path.fileName.value
-
-      controller.successFileUpload(key, fileName)
-
-    } catch (error) {
-      /!*return this.setState({
-        status: error instanceof ValidationException ? STATUS_FATAL : STATUS_ERROR,
-        errorMessage: error instanceof ValidationException ? error.details.file : error.reasonPhrase
-      })*!/
-    }
-  }*/
-
   onClose = () => {
-    const {controller} = this.props
-    controller.removeFile(this.props.file, UPLOAD_STATUS_SUCCESS === this.state.status)
+    const {controller, uploadItem: {key}} = this.props
+    controller.removeUploadFile(key)
   }
 
   onView = () => {
-    const {controller} = this.props
-    controller.openFile(this.state.fileName)
+    const {controller, uploadItem: {uploadedFile}} = this.props
+    controller.openFile(uploadedFile)
   }
 
   onRetry = () => {
-    //this.setState({status: STATUS_PROGRESS}, () => this.uploadFile())
+    const {controller, uploadItem: {key}} = this.props
+    controller.retryUploadFile(key)
   }
 
   render () {
@@ -127,10 +80,6 @@ class UploadItem extends React.Component {
 }
 
 const mapStateToProps = ({config, directory}) => ({config, directory})
-const dependencies = {
-  controller: Controller,
-  client: 'client',
-  fileFactory: 'fileFactory'
-}
+const dependencies = {controller: Controller}
 
 export default inject(connect(mapStateToProps)(UploadItem), dependencies)

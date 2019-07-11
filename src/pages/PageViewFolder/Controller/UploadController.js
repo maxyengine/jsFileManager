@@ -2,15 +2,20 @@ import uuidv4 from 'uuid/v4'
 import { ValidationException } from '@nrg/http'
 import FileElement from '../../../forms/elements/FileElement'
 import {
-  ACTION_UPLOAD_FILE,
+  ACTION_START_UPLOAD_FILE,
   ACTION_PROGRESS_FILE_UPLOAD,
   ACTION_SUCCESS_FILE_UPLOAD,
   ACTION_UPLOAD_FILES_MODAL,
+  ACTION_COMPLETE_FILE_UPLOAD,
+  ACTION_REMOVE_UPLOAD_FILE,
+  ACTION_CLEAR_UPLOAD_LIST,
+  ACTION_RETRY_UPLOAD_FILE,
   UPLOAD_STATUS_ERROR,
   UPLOAD_STATUS_FATAL,
   UPLOAD_STATUS_PROGRESS,
   UPLOAD_STATUS_START,
-  UPLOAD_STATUS_SUCCESS, UPLOAD_STATUS_COMPETE, ACTION_COMPLETE_FILE_UPLOAD
+  UPLOAD_STATUS_SUCCESS,
+  UPLOAD_STATUS_COMPETE
 } from '../constants'
 import TraitController from './TraitController'
 
@@ -26,7 +31,10 @@ export default class UploadController extends TraitController {
   get assignments () {
     return [
       'uploadFilesModal',
-      'uploadFiles'
+      'uploadFiles',
+      'removeUploadFile',
+      'retryUploadFile',
+      'clearUploadList'
     ]
   }
 
@@ -39,17 +47,17 @@ export default class UploadController extends TraitController {
 
     for (const file of files) {
       const {uploadList} = this.state
-
       const uploadItem = {
         status: UPLOAD_STATUS_START,
         key: uuidv4(),
-        file: file,
         fileName: file.name,
         loaded: 0,
-        errorMessage: null
+        errorMessage: null,
+        uploader: this.client.createFileUploader({}, {path: directory.path.value}),
+        file
       }
 
-      this.action(ACTION_UPLOAD_FILE, {
+      this.action(ACTION_START_UPLOAD_FILE, {
         uploadList: [uploadItem, ...uploadList],
       })
 
@@ -62,20 +70,59 @@ export default class UploadController extends TraitController {
         continue
       }
 
-      const uploader = this.client.createFileUploader({}, {path: directory.path.value})
-
-      uploader.on('progress', ({loaded}) => {
-        this.progressFileUpload(uploadItem.key, loaded > file.size ? file.size : loaded)
-      })
-
-      uploader.upload(file)
-        .then(raw => {
-          this.successFileUpload(uploadItem.key, this.fileFactory.createFile(raw))
-        })
-        .catch(error => {
-          this.errorFileUpload(uploadItem.key, error)
-        })
+      this.startUploading(uploadItem.key)
     }
+  }
+
+  retryUploadFile (key) {
+    const {directory} = this.state
+    const uploader = this.client.createFileUploader({}, {path: directory.path.value})
+
+    this.action(ACTION_RETRY_UPLOAD_FILE, {
+      uploadList: this.state.uploadList.map(item => item.key !== key ? item : {
+        ...item,
+        status: UPLOAD_STATUS_START,
+        loaded: 0,
+        errorMessage: null,
+        uploader
+      })
+    })
+
+    this.startUploading(key)
+  }
+
+  removeUploadFile (key) {
+    this.action(ACTION_REMOVE_UPLOAD_FILE, {
+      uploadList: this.state.uploadList.filter(item => {
+        if (UPLOAD_STATUS_PROGRESS === item.status) {
+          item.uploader.abort()
+        }
+
+        return item.key !== key
+      })
+    })
+  }
+
+  clearUploadList () {
+    this.action(ACTION_CLEAR_UPLOAD_LIST, {
+      uploadList: []
+    })
+  }
+
+  startUploading (key) {
+    const {uploader, file} = this.state.uploadList.find(item => item.key === key)
+
+    uploader.on('progress', ({loaded}) => {
+      this.progressFileUpload(key, loaded > file.size ? file.size : loaded)
+    })
+
+    uploader.upload(file)
+      .then(raw => {
+        this.successFileUpload(key, this.fileFactory.createFile(raw))
+      })
+      .catch(error => {
+        this.errorFileUpload(key, error)
+      })
   }
 
   progressFileUpload (key, loaded) {
@@ -88,12 +135,13 @@ export default class UploadController extends TraitController {
     })
   }
 
-  successFileUpload (key, file) {
+  successFileUpload (key, uploadedFile) {
     this.action(ACTION_SUCCESS_FILE_UPLOAD, {
       uploadList: this.state.uploadList.map(item => item.key !== key ? item : {
         ...item,
         status: UPLOAD_STATUS_SUCCESS,
-        fileName: file.path.fileName.value,
+        fileName: uploadedFile.path.fileName.value,
+        uploadedFile
       })
     })
 
@@ -118,18 +166,4 @@ export default class UploadController extends TraitController {
       })
     })
   }
-
-  /*removeFile (file, hasUploaded = true) {
-    const total = this.state.status.total - 1
-    let completed = this.state.status.completed
-
-    if (hasUploaded) {
-      completed--
-    }
-
-    this.runAction(ACTION_DELETE_FILE, {
-      files: this.state.files.filter(item => (item !== file)),
-      status: {...this.state.status, total, completed}
-    })
-  }*/
 }

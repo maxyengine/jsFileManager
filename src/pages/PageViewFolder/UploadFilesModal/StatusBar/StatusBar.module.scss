@@ -1,0 +1,37 @@
+@import "../../../../styles/common";
+
+.default {
+  display: flex;
+  font-size: .875em;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  padding: 0 20px;
+
+  > span {
+    color: $text-color-2;
+  }
+
+  > button {
+    height: 30px;
+    line-height: 1.2;
+    padding: 7px 20px;
+    min-width: 80px;
+    vertical-align: middle;
+    text-decoration: none;
+    color: $info-btn-color;
+    background: $info-btn-bg-color;
+    box-shadow: 0 0 0 0 rgba($accent, .5);
+    border-radius: $br;
+    border: none;
+
+    &:hover {
+      background-color: $info-btn-hover-bg-color;
+      color: #fff;
+    }
+
+    &:active {
+      box-shadow: 0 0 6px 9px rgba($accent, 0);
+    }
+  }
+}

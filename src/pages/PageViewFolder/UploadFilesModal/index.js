@@ -6,6 +6,7 @@ import Controller from '../Controller'
 import { inject } from '@nrg/react-di'
 import UploadList from './UploadList'
 import { withRouter } from 'react-router'
+import StatusBar from './StatusBar'
 
 class UploadFilesModal extends React.Component {
 
@@ -25,6 +26,7 @@ class UploadFilesModal extends React.Component {
       >
         <div className={theme.default}>
           <h2>Upload Files</h2>
+          <StatusBar/>
           <UploadList/>
         </div>
       </Modal>

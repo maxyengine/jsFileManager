@@ -6,12 +6,7 @@ import { icon } from './helpers'
 import Directory from '../../../../entities/Directory'
 import { Link } from 'react-router-dom'
 
-const Component = class extends React.Component {
-
-  constructor (props) {
-    super(props)
-    this.controller = this.props.controller
-  }
+class FileItem extends React.Component {
 
   render () {
     const {file} = this.props
@@ -49,4 +44,4 @@ const Component = class extends React.Component {
 
 const dependencies = {controller: Controller}
 
-export default inject(Component, dependencies)
+export default inject(FileItem, dependencies)

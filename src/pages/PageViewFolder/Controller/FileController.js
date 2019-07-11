@@ -35,10 +35,10 @@ export default class FileController extends TraitController {
   }
 
   openFile (file) {
-    this.client.openFile(file.path.fileName.value)
+    this.client.openFile(file.path.value)
   }
 
   downloadFile (file) {
-    this.client.downloadFile(file.path.fileName.value)
+    this.client.downloadFile(file.path.value)
   }
 }

@@ -12,9 +12,7 @@ export default class extends Client {
   get defaults () {
     return {
       ...super.defaults || {},
-      storageId: 'uploads',
-      directFileAccess: false,
-      directFileUrl: '/uploads'
+      storageId: 'uploads'
     }
   }
 
@@ -27,46 +25,27 @@ export default class extends Client {
   }
 
   async fetchDirectory (path) {
-    const raw = await this.post('/directory/read', {path: path || `${this.storageId}://`})
-
-    return this.fileFactory.createDirectory(raw)
+    return this.fileFactory.createDirectory(
+      await this.post('/directory/read', {path: path || `${this.storageId}://`})
+    )
   }
 
   async createDirectory (path) {
-    const raw = await this.post('/directory/create', {path: path})
-
-    return this.fileFactory.createDirectory(raw)
+    return this.fileFactory.createDirectory(
+      await this.post('/directory/create', {path: path})
+    )
   }
 
   async deleteFile (path) {
-    await this.post('/delete', {path})
+    await this.post('/file/delete', {path})
   }
 
-  openFile (fileName) {
-    if (this.directFileAccess) {
-      window.open(
-        this.createPrettyUrl(`${this.directFileUrl}/${fileName}`),
-        '_blank'
-      )
-    } else {
-      window.open(
-        this.createUrl('/open', {
-          path: `${this.storageId}://${fileName}`,
-          Authorization: this.authorization()
-        }),
-        '_blank'
-      )
-    }
+  openFile (path) {
+    window.open(this.createUrl('/file/open', {Authorization: this.authorization(), path}), '_blank')
   }
 
-  downloadFile (fileName) {
-    window.open(
-      this.createUrl('/download', {
-        path: `${this.storageId}://${fileName}`,
-        Authorization: this.authorization()
-      }),
-      '_blank'
-    )
+  downloadFile (path) {
+    window.open(this.createUrl('/file/download', {Authorization: this.authorization(), path}), '_blank')
   }
 
   createFileUploader (queryParams = {}, bodyParams = {}, request = {}) {
