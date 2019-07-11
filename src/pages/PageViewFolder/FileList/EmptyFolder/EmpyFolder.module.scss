@@ -11,13 +11,13 @@
 		top: -.2em;
 
 		path, line, polyline {
-		  stroke: $text-color-2;
+		  stroke: $secondary-text-color;
 		}
 	}
 
 	> span {
 		display: block;
 		margin-left: 1.5em;
-		color: $text-color-2;
+		color: $secondary-text-color;
 	}
 }

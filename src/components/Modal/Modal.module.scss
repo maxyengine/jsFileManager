@@ -11,12 +11,12 @@
 
   .popup {
     z-index: 1000;
-    max-width: 500px;
+    max-width: 600px;
     position: relative;
-    top: 25%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: $bg;
+    background: $primary-bg-color;
     border: 1px $menu-border-color solid;
     border-radius: 4px;
     padding: 2px;
@@ -29,10 +29,11 @@
     right: 9px;
     top: 9px;
     z-index: 1000;
-    font-size: 1em;
-    color: $accent;
+    font-size: 1.5em;
+    color: $accent-color;
+
     &:hover {
-      color: adjust-hue($accent, 30deg);
+      color: adjust-hue($accent-color, 30deg);
     }
   }
 }

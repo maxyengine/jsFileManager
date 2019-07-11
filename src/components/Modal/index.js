@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import theme from './Modal.module.scss'
-import {FaTimesCircle} from 'react-icons/fa'
+import {MdClose} from 'react-icons/md'
 
 class Modal extends Component {
 
@@ -17,7 +17,7 @@ class Modal extends Component {
       <div className={theme.default}>
         <div className={theme.popup}>
           <button className={theme.close} onClick={onClose}>
-            <FaTimesCircle/>
+            <MdClose/>
           </button>
           {children}
         </div>

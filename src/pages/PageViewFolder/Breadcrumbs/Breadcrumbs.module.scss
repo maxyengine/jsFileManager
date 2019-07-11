@@ -2,12 +2,12 @@
 
 .default {
   display: flex;
-  background: $bg;
+  background: $primary-bg-color;
   min-height: 36px;
 
   a {
     display: block;
-    color: $text-color-1;
+    color: $primary-text-color;
     text-decoration: none;
     padding: 4px 0;
     font-size: large;

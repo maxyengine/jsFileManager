@@ -1,16 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { inject } from '@nrg/react-di'
-import Controller from '../Controller'
+import Controller from '../../Controller'
 import theme from './DragArea.module.scss'
-import uuidv4 from 'uuid/v4'
 import fileSize from 'filesize'
-import Logo from '../../../components/Logo'
+import Logo from './Logo'
 
 const STATUS_DEFAULT = 0
 const STATUS_DRAG_START = 1
 
-const Component = class extends React.Component {
+class DragArea extends React.Component {
 
   state = {
     status: STATUS_DEFAULT,
@@ -35,12 +34,10 @@ const Component = class extends React.Component {
   onSelectFiles = (e) => {
     this.onDragFinish(e)
 
+    const {controller} = this.props
     const {files} = e.dataTransfer || e.target
 
-    for (const file of files) {
-      file._id = uuidv4()
-      this.controller.addFile(file)
-    }
+    controller.uploadFiles(files)
 
     this.fileInput.value = null
   }
@@ -56,7 +53,7 @@ const Component = class extends React.Component {
   }
 
   render () {
-    const {maxSize} = this.props.config
+    const {config: {maxSize}} = this.props
 
     return (
       <div className={this.className}
@@ -87,4 +84,4 @@ const Component = class extends React.Component {
 const mapStateToProps = ({config}) => ({config})
 const dependencies = {controller: Controller}
 
-export default inject(connect(mapStateToProps)(Component), dependencies)
+export default inject(connect(mapStateToProps)(DragArea), dependencies)

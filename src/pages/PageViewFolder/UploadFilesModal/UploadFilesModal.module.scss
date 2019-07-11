@@ -2,11 +2,11 @@
 
 .default {
 
-  background: $bg;
+  background: $primary-bg-color;
 
   h2 {
     padding: 4px 12px 0;
-    color: $text-color-1;
+    color: $primary-text-color;
     font-size: 1.1rem;
   }
 

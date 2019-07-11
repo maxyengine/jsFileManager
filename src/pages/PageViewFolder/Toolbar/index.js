@@ -3,10 +3,9 @@ import { connect } from 'react-redux'
 import { inject } from '@nrg/react-di'
 import Controller from '../Controller'
 import theme from './Toolbar.module.scss'
-import { FaPlus, FaRegCopy, FaFileArchive } from 'react-icons/fa'
+import { FaPlus, FaRegCopy, FaFileArchive, FaUpload } from 'react-icons/fa'
 import { MdClose } from 'react-icons/md'
 import Dropdown from '../../../components/Dropdown'
-import UploadButton from './UploadButton'
 
 class Toolbar extends React.Component {
 
@@ -23,13 +22,9 @@ class Toolbar extends React.Component {
     console.log('newHyperlink')
   }
 
-  uploadFiles = (e) => {
-    e.preventDefault()
-
+  uploadFiles = () => {
     const {controller} = this.props
-    const {files} = e.dataTransfer || e.target
 
-    controller.uploadFiles(files)
     controller.uploadFilesModal(true)
   }
 
@@ -44,7 +39,7 @@ class Toolbar extends React.Component {
             {label: 'Hyperlink', onClick: this.newHyperlink}
           ]}
         />
-        <UploadButton onSelectFiles={this.uploadFiles}/>
+        <button onClick={this.uploadFiles}><FaUpload/></button>
         <button><FaRegCopy/></button>
         <button><MdClose/></button>
         <button><FaFileArchive/></button>

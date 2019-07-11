@@ -104,6 +104,12 @@ export default class UploadController extends TraitController {
   }
 
   clearUploadList () {
+    this.state.uploadList.forEach(item => {
+      if (UPLOAD_STATUS_PROGRESS === item.status) {
+        item.uploader.abort()
+      }
+    })
+
     this.action(ACTION_CLEAR_UPLOAD_LIST, {
       uploadList: []
     })

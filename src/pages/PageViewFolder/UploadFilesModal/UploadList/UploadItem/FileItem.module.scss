@@ -6,7 +6,7 @@
   justify-content: flex-start;
   align-items: center;
   line-height: 1.25;
-  transition: all $time $func;
+
 
   &, * {
     position: relative;
@@ -41,7 +41,7 @@
 
     > span {
       display: none;
-      color: $accent;
+      color: $accent-color;
 
       &:after {
         padding: 0 3px;
@@ -69,10 +69,10 @@
       flex-basis: 30px;
       border: 0;
       font-size: 0.7em;
-      color: $text-color-2;
+      color: $secondary-text-color;
       text-decoration: none;
-      border-radius: $br;
-      transition: all $time $func;
+      border-radius: $border-radius;
+
 
       i {
         transition: none;
@@ -101,26 +101,26 @@
     }
 
     .btnView, .btnDownload {
-      box-shadow: 0 0 0 0 rgba($accent, .5);
+      box-shadow: 0 0 0 0 rgba($accent-color, .5);
 
       &:hover {
-        background-color: $accent;
+        background-color: $accent-color;
       }
 
       &:active {
-        box-shadow: 0 0 6px 9px rgba($accent, 0);
+        box-shadow: 0 0 6px 9px rgba($accent-color, 0);
       }
     }
 
     .btnClose {
-      box-shadow: 0 0 0 0 rgba($accent, .5);
+      box-shadow: 0 0 0 0 rgba($accent-color, .5);
 
       &:hover {
         background-color: $info-btn-hover-bg-color;
       }
 
       &:active {
-        box-shadow: 0 0 6px 9px rgba($accent, 0);
+        box-shadow: 0 0 6px 9px rgba($accent-color, 0);
       }
     }
   }
@@ -185,7 +185,7 @@
       background-color: initial;
     }
     50% {
-      background-color: $accent;
+      background-color: $accent-color;
     }
     100% {
       background-color: initial;

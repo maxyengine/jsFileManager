@@ -7,6 +7,7 @@ import { inject } from '@nrg/react-di'
 import UploadList from './UploadList'
 import { withRouter } from 'react-router'
 import StatusBar from './StatusBar'
+import DragArea from './DragArea'
 
 class UploadFilesModal extends React.Component {
 
@@ -25,7 +26,7 @@ class UploadFilesModal extends React.Component {
         onClose={this.onClose}
       >
         <div className={theme.default}>
-          <h2>Upload Files</h2>
+          <DragArea/>
           <StatusBar/>
           <UploadList/>
         </div>

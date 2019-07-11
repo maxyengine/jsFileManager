@@ -1,7 +1,8 @@
-@import "../../styles/common";
+@import "../../../../../styles/common";
 
 .default {
   margin-bottom: 10px;
+
 
   path, line, polyline {
   	stroke: $secondary-text-color;

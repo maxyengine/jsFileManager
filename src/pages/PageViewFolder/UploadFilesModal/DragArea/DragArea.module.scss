@@ -1,17 +1,17 @@
-@import "../../../styles/common";
+@import "../../../../styles/common";
 
 .default {
-  padding: 50px;
-  min-height: 300px;
-  border-radius: $br;
+  padding: 20px;
+  min-height: 100px;
+  border-radius: $border-radius;
   letter-spacing: .025em;
   text-align: center;
 
-  border: 1px dashed $uploader-border-color;
+  border: 1px dashed $secondary-text-color;
 
   &.drag {
-    background-color: $uploader-bg-color-drop;
-    border-color: rgba($accent, .5);
+    background-color: rgba($accent-color, .1);
+    border-color: rgba($accent-color, .5);
 
     > div {
       pointer-events: none;
@@ -28,19 +28,19 @@
     > span {
       &:nth-child(1) {
         font-size: 1.5em;
-        color: $text-color-1;
+        color: $primary-text-color;
       }
 
       &:nth-child(2) {
         font-size: .875em;
         font-weight: 300;
-        color: $text-color-2;
+        color: $secondary-text-color;
       }
 
       &:nth-child(4) {
         font-size: .75em;
         font-weight: 300;
-        color: $text-color-2;
+        color: $secondary-text-color;
       }
     }
   }
@@ -48,8 +48,8 @@
   .browseButton {
     margin: 10px auto;
     overflow: hidden;
-    box-shadow: 0 0 0 0 rgba($accent, .5);
-    transition: all $time $func;
+    box-shadow: 0 0 0 0 rgba($accent-color, .5);
+
     border-radius: 1px;
 
     > span {
@@ -57,19 +57,19 @@
       min-width: 150px;
       padding: 12px 40px;
       line-height: 1;
-      background-color: $accent;
-      transition: all $time $func;
-      border-radius: $br;
+      background-color: $accent-color;
+
+      border-radius: $border-radius;
       cursor: pointer;
       color: #fff;
     }
 
     &:hover > span {
-      background-color: adjust-hue($accent, 30deg);
+      background-color: adjust-hue($accent-color, 30deg);
     }
 
     &:active {
-      box-shadow: 0 0 6px 9px rgba($accent, 0);
+      box-shadow: 0 0 6px 9px rgba($accent-color, 0);
     }
 
     > input {

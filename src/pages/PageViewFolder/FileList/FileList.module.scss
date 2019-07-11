@@ -5,8 +5,8 @@
   margin: 0;
   display: block;
   overflow: auto;
-  color: $text-color-1;
-  background-color: $bg;
+  color: $primary-text-color;
+  background-color: $primary-bg-color;
   min-height: 800px;
 
   & > * {
@@ -15,7 +15,7 @@
   }
 
   a {
-    color: $text-color-1;
+    color: $primary-text-color;
     text-decoration: none;
   }
 
@@ -28,7 +28,7 @@
     }
 
     tr:nth-child(even) td {
-      background-color: $bg;
+      background-color: $primary-bg-color;
     }
   }
 }

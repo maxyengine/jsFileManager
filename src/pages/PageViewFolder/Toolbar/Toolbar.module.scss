@@ -4,16 +4,17 @@
   display: flex;
 
   button {
-    background-color: $menu-bg;
+    background: transparent;
     border: none;
-    color: $text-color-2;
+    color: $info-btn-color;
     padding: 8px 12px;
     font-size: 16px;
     cursor: pointer;
     outline: none;
 
     &:hover {
-      background-color: $menu-hover-bg;
+      color: #fff;
+      background-color: $accent-color;
     }
   }
 }

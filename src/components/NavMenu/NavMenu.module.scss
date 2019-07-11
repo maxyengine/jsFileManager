@@ -12,12 +12,11 @@
     margin: 0 -1px 0 0;
     padding: 9px 30px 7px;
     border: 1px solid $menu-border-color;
-    font-size: $font-size-base;
+    font-size: $font-size;
     background: $menu-bg;
     line-height: $line-height;
-    font-family: $font-base;
+    font-family: $font-family;
     color: $info-btn-color;
-    transition: all $time $func;
     text-decoration: none;
     text-align: center;
     cursor: pointer;
@@ -27,7 +26,7 @@
     }
 
     &:hover, &:active, &.active {
-      color: $text-color-1;
+      color: $primary-text-color;
       background: $menu-hover-bg;
       z-index: 2;
     }

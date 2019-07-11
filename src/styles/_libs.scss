@@ -1,6 +1,6 @@
 %box {
   padding: 50px;
-  border-radius: $br;
+  border-radius: $border-radius;
   letter-spacing: .025em;
   text-align: center;
   display: flex;
@@ -42,5 +42,5 @@
 %button {
   vertical-align: middle;
   white-space: nowrap;
-  border-radius: $br;
+  border-radius: $border-radius;
 }
