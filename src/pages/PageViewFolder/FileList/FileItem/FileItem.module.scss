@@ -6,20 +6,4 @@
     width: 30px;
     font-size: 24px;
   }
-
-  td {
-    text-align: left;
-    vertical-align: middle;
-    line-height: 1.5;
-    height: 2.5em;
-    padding: 0 12px;
-    -webkit-box-shadow: -1px 0 0 0 #353535 inset;
-    box-shadow: -1px 0 0 0 $menu-border-color inset;
-
-    &:first-child {
-      position: relative;
-      width: 20px;
-      cursor: pointer;
-    }
-  }
 }

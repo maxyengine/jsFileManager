@@ -4,10 +4,9 @@
   padding: 0;
   margin: 0;
   display: block;
-  overflow: auto;
   color: $primary-text-color;
   background-color: $primary-bg-color;
-  min-height: 800px;
+  min-height: 400px;
 
   & > * {
     padding: 0;
@@ -20,8 +19,43 @@
   }
 
   table {
-    width: 100%;
     border-spacing: 0;
+    width: 100%;
+
+    td {
+      text-align: left;
+      vertical-align: middle;
+      line-height: 1.5;
+      height: 2.5em;
+      padding: 0 12px;
+      -webkit-box-shadow: -1px 0 0 0 $menu-border-color inset;
+      box-shadow: -1px 0 0 0 $menu-border-color inset;
+
+      &:first-child {
+        position: relative;
+        width: 20px;
+        cursor: pointer;
+      }
+
+      .baseName {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .header {
+    overflow: hidden;
+    background-color: #737d95;
+    color: #fff;
+
+    td {
+      -webkit-box-shadow: -1px 0 0 0 #cfd6e5 inset;
+      box-shadow: -1px 0 0 0 #cfd6e5 inset;
+    }
+  }
+
+  .body {
+    overflow: auto;
 
     tr:nth-child(odd) td {
       background-color: $item-bg-color;

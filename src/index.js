@@ -27,7 +27,8 @@ $nrg.Uploader = $nrg.Uploader || class extends Value {
   get defaults () {
     return {
       apiUrl: '.',
-      wrapper: document.body
+      wrapper: document.body,
+      height: null
     }
   }
 
@@ -38,7 +39,9 @@ $nrg.Uploader = $nrg.Uploader || class extends Value {
       session: [Session, {name: '$nrg.Uploader'}],
       client: Client,
       authControl: AuthControl,
-      fileFactory: FileFactory
+      fileFactory: FileFactory,
+      appHeight: this.height,
+      appWrapper: this.wrapper
     })
 
     const client = injector.getService('client')
@@ -52,7 +55,7 @@ $nrg.Uploader = $nrg.Uploader || class extends Value {
       <Router>
         <ServiceLocator injector={injector}>
           <AppWrapper>
-              {/*<NavMenu/>
+            {/*<NavMenu/>
             <PrivateRoute exact path="/" component={PageUploader}/>
             <PrivateRoute exact path="/view-folder" component={PageViewFolder}/>
             <Route path="/login" component={PageLogin}/>*/}
@@ -70,7 +73,11 @@ $nrg.Uploader = $nrg.Uploader || class extends Value {
 }
 
 // dev
-new $nrg.Uploader({apiUrl: apiUrl, wrapper: document.getElementById('app')}).run()
+new $nrg.Uploader({
+  apiUrl: apiUrl,
+  wrapper: document.getElementById('app'),
+  height: 800
+}).run()
 
 // build
 //new $nrg.Uploader({wrapper: document.getElementById('app')}).run()

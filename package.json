@@ -13,6 +13,7 @@
     "browser-cookies": "^1.2.0",
     "file-extension": "^4.0.5",
     "filesize": "^4.1.2",
+    "lodash": "^4.17.14",
     "node-sass": "^4.11.0",
     "path": "^0.12.7",
     "react": "^16.8.6",
