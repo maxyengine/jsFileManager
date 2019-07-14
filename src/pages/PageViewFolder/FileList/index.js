@@ -11,7 +11,8 @@ class FileList extends React.Component {
   state = {
     resize: true,
     columns: [],
-    bodyHeight: '100%'
+    tableHeight: null,
+    bodyHeight: null
   }
 
   columns = []
@@ -24,63 +25,58 @@ class FileList extends React.Component {
     window.removeEventListener('resize', this.onResize)
   }
 
-  componentDidUpdate () {
-    this.alignColumns()
+  componentDidUpdate (prevProps) {
+    if (
+      this.columns.length &&
+      this.columns.some((column, index) => column !== this.state.columns[index])
+    ) {
+      const {appHeight, appWrapper} = this.props
+      const bodyHeight = appHeight ?
+        appHeight - this.body.offsetTop + appWrapper.offsetTop :
+        document.documentElement.clientHeight - this.body.offsetTop
+      const tableHeight = this.header.clientHeight + bodyHeight - 10
+
+      this.setState({
+        tableHeight,
+        bodyHeight,
+        columns: [...this.columns]
+      })
+    }
+
+    if (prevProps.activeIndex !== this.props.activeIndex) {
+      const
+        list = this.body,
+        item = this.activeItem,
+        relativeTop = item.getBoundingClientRect().top - list.getBoundingClientRect().top,
+        screenHeight = list.offsetHeight - item.offsetHeight
+
+      if (relativeTop < 0 || relativeTop >= screenHeight) {
+        list.scrollTop = item.offsetTop - screenHeight + 5
+      }
+    }
   }
 
   onResize = () => {
     this.setState({resize: !this.state.resize})
   }
 
-  alignColumns () {
-    if (
-      this.columns.length &&
-      this.columns.some((column, index) => column !== this.state.columns[index])
-    ) {
-      const {appHeight, appWrapper} = this.props
-
-      const bodyHeight = appHeight ?
-        appHeight - this.body.offsetTop + appWrapper.offsetTop :
-        document.documentElement.clientHeight - this.body.offsetTop
-
-      this.setState({
-        bodyHeight,
-        columns: [...this.columns]
-      })
-    }
-  }
-
-  onBackRef = (ref, index) => {
+  onBackColumnRef = (ref, index) => {
     if (ref) {
       this.columns[index] = ref.offsetWidth
     }
   }
 
-  alignHeight () {
-    let
-      appWrapper = document.body === this.layouts.wrapper.element ? document.documentElement : this.layouts.wrapper.element,
-      wrapper = appWrapper
-
-    if (this.owner.wrapper && this.owner.wrapper.element !== appWrapper) {
-      wrapper = this.owner.wrapper.element
-      const wrapperHeight = appWrapper.clientHeight - wrapper.offsetTop
-      wrapper.style.height = wrapperHeight + 'px'
-    }
-
-    const
-      element = this.owner.element,
-      height = wrapper.clientHeight - element.offsetTop
-
-    element.style.height = height + 'px'
+  onBackRef = (ref) => {
+    this.activeItem = ref
   }
 
   render () {
-    const {directory, files} = this.props
-    const {columns, bodyHeight} = this.state
+    const {directory, files, activeIndex} = this.props
+    const {columns, bodyHeight, tableHeight} = this.state
 
     if (!directory) {
       return (
-        <div className={theme.default}>
+        <div className={theme.default} style={{height: tableHeight}}>
           <Spinner/>
         </div>
       )
@@ -117,10 +113,18 @@ class FileList extends React.Component {
         <div ref={ref => {this.body = ref}} style={{height: bodyHeight}} className={theme.body}>
           <table>
             <tbody>
-            {parent && <ParentItem parent={parent}/>}
-            {files.map((file, index) => index === files.length - 1 ?
-              <FileItem key={file.path.value} file={file} backRef={this.onBackRef}/> :
-              <FileItem key={file.path.value} file={file}/>
+            {parent && <ParentItem
+              parent={parent}
+              isActive={activeIndex === -1}
+            />}
+            {files.map((file, index) =>
+              <FileItem
+                key={file.path.value}
+                file={file}
+                backColumnRef={(index === files.length - 1) && this.onBackColumnRef}
+                isActive={activeIndex === index}
+                backRef={activeIndex === index && this.onBackRef}
+              />
             )}
             </tbody>
           </table>
@@ -130,7 +134,7 @@ class FileList extends React.Component {
   }
 }
 
-const mapStateToProps = ({directory, files}) => ({directory, files})
+const mapStateToProps = ({directory, files, activeIndex}) => ({directory, files, activeIndex})
 const dependencies = {appHeight: 'appHeight', appWrapper: 'appWrapper'}
 
 export default inject(connect(mapStateToProps)(FileList), dependencies)

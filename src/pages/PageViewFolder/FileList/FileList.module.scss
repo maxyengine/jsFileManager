@@ -6,7 +6,6 @@
   display: block;
   color: $primary-text-color;
   background-color: $primary-bg-color;
-  min-height: 400px;
 
   & > * {
     padding: 0;
@@ -36,10 +35,6 @@
         width: 20px;
         cursor: pointer;
       }
-
-      .baseName {
-        cursor: pointer;
-      }
     }
   }
 
@@ -56,13 +51,5 @@
 
   .body {
     overflow: auto;
-
-    tr:nth-child(odd) td {
-      background-color: $item-bg-color;
-    }
-
-    tr:nth-child(even) td {
-      background-color: $primary-bg-color;
-    }
   }
 }

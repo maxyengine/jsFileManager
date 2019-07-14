@@ -1,9 +1,29 @@
 @import "../../../../styles/common";
 
 .default {
-
   .iconWrapper {
     width: 30px;
     font-size: 24px;
+  }
+
+  .baseName {
+    cursor: pointer;
+  }
+
+  &:nth-child(odd) td {
+    background-color: $item-bg-color;
+  }
+
+  &:nth-child(even) td {
+    background-color: $primary-bg-color;
+  }
+
+  &.active td {
+    background-color: #00a9bf;
+    color: #ffffff;
+
+    a {
+      color: #ffffff;
+    }
   }
 }

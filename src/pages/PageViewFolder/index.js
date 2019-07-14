@@ -7,8 +7,19 @@ import Toolbar from './Toolbar'
 import Breadcrumbs from './Breadcrumbs'
 import FileList from './FileList'
 import UploadFilesModal from './UploadFilesModal'
+import { HotKeys } from 'react-hotkeys'
 
 class PageViewFolder extends React.Component {
+
+  keyMap = {
+    prev: 'up',
+    next: 'down'
+  }
+
+  handlers = {
+    next: this.props.controller.activateNextItem,
+    prev: this.props.controller.activatePrevItem
+  }
 
   async fetchData () {
     const {controller} = this.props
@@ -33,9 +44,11 @@ class PageViewFolder extends React.Component {
 
     return (
       <Provider store={controller.store}>
-        <Toolbar/>
-        <Breadcrumbs/>
-        <FileList/>
+        <HotKeys keyMap={this.keyMap} handlers={this.handlers}>
+          <Toolbar/>
+          <Breadcrumbs/>
+          <FileList/>
+        </HotKeys>
         <NewFolderModal/>
         <UploadFilesModal/>
       </Provider>
