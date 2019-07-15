@@ -50,7 +50,8 @@ export default class DirectoryController extends TraitController {
     this.action(ACTION_FETCH_DIRECTORY, {
       directory: null,
       files: [],
-      keywords: ''
+      keywords: '',
+      activeIndex: 0
     })
 
     const directory = await this.client.fetchDirectory(path)

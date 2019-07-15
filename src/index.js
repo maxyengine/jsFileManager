@@ -18,15 +18,9 @@ import { Endpoint } from '@nrg/http'
 import { Value } from '@nrg/core'
 import { apiUrl } from './devConfig'
 import AppWrapper from './components/AppWrapper'
-import { configure } from 'react-hotkeys'
 
 window.$nrg = window.$nrg || {}
 var $nrg = window.$nrg
-
-configure({
-  ignoreRepeatedEventsWhenKeyHeldDown: false
-})
-
 
 $nrg.Uploader = $nrg.Uploader || class extends Value {
 

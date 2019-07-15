@@ -1,6 +1,7 @@
 @import "../../../../styles/common";
 
 .default {
+
   .iconWrapper {
     width: 30px;
     font-size: 24px;
@@ -11,11 +12,12 @@
   }
 
   &:nth-child(odd) td {
-    background-color: $item-bg-color;
+    background-color: $primary-bg-color;
+
   }
 
   &:nth-child(even) td {
-    background-color: $primary-bg-color;
+    background-color: $item-bg-color;
   }
 
   &.active td {

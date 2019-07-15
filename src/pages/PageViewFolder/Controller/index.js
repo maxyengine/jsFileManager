@@ -22,6 +22,7 @@ export default class Controller extends StoreController {
       ],
       uploadList: [],
       activeIndex: 0,
+      focusedComponent: null,
       newFolderModal: false,
       uploadFilesModal: false
     }
@@ -35,5 +36,13 @@ export default class Controller extends StoreController {
       UploadController,
       KeyNavigationController
     ]
+  }
+
+  setFocusedComponent (focusedComponent) {
+    this.action('SET_FOCUSED_COMPONENT', {focusedComponent})
+  }
+
+  getFocusedComponent () {
+    return this.state.focusedComponent
   }
 }

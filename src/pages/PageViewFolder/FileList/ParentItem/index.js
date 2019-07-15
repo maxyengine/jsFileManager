@@ -6,12 +6,17 @@ import { MdReply } from 'react-icons/md'
 class ParentItem extends React.Component {
 
   render () {
-    const {parent} = this.props
-    const path = parent.path.value
+    const {file, backRef, isActive, onClick} = this.props
+    const path = file.path.value
     const baseName = '..'
+    const className = [theme.default]
+
+    if (isActive) {
+      className.push(theme.active)
+    }
 
     return (
-      <tr className={theme.default}>
+      <tr className={className.join(' ')} ref={ref => backRef && backRef(ref)} onClick={onClick}>
         <td>
           <div className={theme.iconWrapper}>
             <Link to={{pathname: '/', search: `?path=${path}`}}>

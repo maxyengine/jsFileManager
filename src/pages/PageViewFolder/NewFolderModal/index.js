@@ -23,6 +23,24 @@ class NewFolderModal extends React.Component {
     }
   }
 
+  async componentDidMount () {
+    document.addEventListener('keydown', event => {
+      const {controller} = this.props
+
+      if (controller.getFocusedComponent() === this) {
+        this.onKeyDown(event)
+      }
+    })
+  }
+
+  onKeyDown = (event) => {
+    switch (event.keyCode) {
+      case 27:
+        return this.onClose()
+      default:
+    }
+  }
+
   onSubmit = async (event) => {
     event.preventDefault()
 
@@ -73,6 +91,10 @@ class NewFolderModal extends React.Component {
     })
 
     controller.newFolderModal(false)
+  }
+
+  componentDidUpdate () {
+    this.props.controller.setFocusedComponent(this)
   }
 
   render () {

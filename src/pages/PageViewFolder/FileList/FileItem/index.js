@@ -14,19 +14,20 @@ class FileItem extends React.Component {
   }
 
   render () {
-    const {file, backRef, backColumnRef, isActive} = this.props
+    const {file, backRef, backColumnRef, isActive, onClick} = this.props
     const path = file.path.value
     const baseName = file.path.fileName.baseName
     const extension = file instanceof Directory ? 'dir' : file.path.fileName.extension
     const size = file.size && file.size.toHumanString()
     const lastModified = file.lastModified && file.lastModified.toLocaleString()
     const className = [theme.default]
+    
     if (isActive) {
       className.push(theme.active)
     }
 
     return (
-      <tr className={className.join(' ')} ref={ref => backRef && backRef(ref)}>
+      <tr className={className.join(' ')} ref={ref => backRef && backRef(ref)} onClick={onClick}>
         <td>
           <div className={theme.iconWrapper} ref={ref => backColumnRef && backColumnRef(ref, 0)}>{icon(file)}</div>
         </td>

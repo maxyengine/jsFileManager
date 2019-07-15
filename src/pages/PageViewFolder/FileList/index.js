@@ -5,6 +5,7 @@ import ParentItem from './ParentItem'
 import { connect } from 'react-redux'
 import Spinner from './Spinner'
 import { inject } from '@nrg/react-di'
+import Controller from '../Controller'
 
 class FileList extends React.Component {
 
@@ -43,16 +44,17 @@ class FileList extends React.Component {
       })
     }
 
-    if (prevProps.activeIndex !== this.props.activeIndex) {
-      const
-        list = this.body,
-        item = this.activeItem,
-        relativeTop = item.getBoundingClientRect().top - list.getBoundingClientRect().top,
-        screenHeight = list.offsetHeight - item.offsetHeight
+    if (this.activeItem && prevProps.activeIndex !== this.props.activeIndex) {
+      const relativeTop = this.activeItem.getBoundingClientRect().top - this.body.getBoundingClientRect().top
+      const screenHeight = this.body.offsetHeight - this.activeItem.offsetHeight
 
+      //bottom position oriented scrolling
       if (relativeTop < 0 || relativeTop >= screenHeight) {
-        list.scrollTop = item.offsetTop - screenHeight + 5
+        this.body.scrollTop = this.activeItem.offsetTop - screenHeight + 10
       }
+
+      //screen oriented scrolling
+      // this.body.scrollTop = Math.floor((this.activeItem.offsetTop) / screenHeight) * screenHeight
     }
   }
 
@@ -70,6 +72,12 @@ class FileList extends React.Component {
     this.activeItem = ref
   }
 
+  onActivateItem = (index) => {
+    const {controller} = this.props
+
+    controller.activateItem(index)
+  }
+
   render () {
     const {directory, files, activeIndex} = this.props
     const {columns, bodyHeight, tableHeight} = this.state
@@ -82,7 +90,7 @@ class FileList extends React.Component {
       )
     }
 
-    const parent = directory.parent
+    const fileList = directory.parent ? [directory.parent, ...files] : files
 
     return (
       <div className={theme.default}>
@@ -113,17 +121,21 @@ class FileList extends React.Component {
         <div ref={ref => {this.body = ref}} style={{height: bodyHeight}} className={theme.body}>
           <table>
             <tbody>
-            {parent && <ParentItem
-              parent={parent}
-              isActive={activeIndex === -1}
-            />}
-            {files.map((file, index) =>
+            {fileList.map((file, index) => directory.parent === file ?
+              <ParentItem
+                key={'..'}
+                file={file}
+                isActive={activeIndex === index}
+                backRef={activeIndex === index && this.onBackRef}
+                onClick={() => this.onActivateItem(index)}
+              /> :
               <FileItem
                 key={file.path.value}
                 file={file}
-                backColumnRef={(index === files.length - 1) && this.onBackColumnRef}
                 isActive={activeIndex === index}
                 backRef={activeIndex === index && this.onBackRef}
+                backColumnRef={(index === files.length - 1) && this.onBackColumnRef}
+                onClick={() => this.onActivateItem(index)}
               />
             )}
             </tbody>
@@ -135,7 +147,11 @@ class FileList extends React.Component {
 }
 
 const mapStateToProps = ({directory, files, activeIndex}) => ({directory, files, activeIndex})
-const dependencies = {appHeight: 'appHeight', appWrapper: 'appWrapper'}
+const dependencies = {
+  appHeight: 'appHeight',
+  appWrapper: 'appWrapper',
+  controller: Controller
+}
 
 export default inject(connect(mapStateToProps)(FileList), dependencies)
 

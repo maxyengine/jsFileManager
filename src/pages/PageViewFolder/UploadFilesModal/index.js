@@ -17,6 +17,10 @@ class UploadFilesModal extends React.Component {
     history.push(`/?path=${encodeURIComponent(directory.path.value)}`)
   }
 
+  componentDidUpdate () {
+    this.props.controller.setFocusedComponent(this)
+  }
+
   render () {
     const {uploadFilesModal} = this.props
 
